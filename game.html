@@ -245,9 +245,42 @@
             #result-title { font-size: 1.8rem; margin-bottom: 15px; }
             #result-explanation { font-size: 0.95rem; margin-bottom: 20px; }
         }
+
+        /* Exit Fullscreen Button */
+        #btn-exit-fs {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(15, 5, 20, 0.8);
+            color: var(--neon-pink);
+            border: 1px dashed var(--neon-pink);
+            padding: 8px 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            z-index: 9999;
+            border-radius: 4px;
+            display: none;
+            font-family: 'Share Tech Mono', monospace;
+            text-transform: uppercase;
+        }
+        #btn-exit-fs:hover {
+            background: var(--neon-pink);
+            color: #000;
+        }
+        
+        @media (max-width: 600px) {
+            #btn-exit-fs {
+                top: 5px;
+                right: 5px;
+                font-size: 0.9rem;
+                padding: 6px 10px;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <button id="btn-exit-fs" onclick="attemptExitFullscreen()">[X] EXIT</button>
 
     <div id="start-screen">
         <h1>SPOT THE PHISH</h1>
@@ -449,6 +482,46 @@
                 startGame();
             }
         });
+
+        // Fullscreen Exit Logic
+        setInterval(() => {
+            let isFs = false;
+            // Native Fullscreen / New Tab fallback check
+            if (window === window.top) {
+                // Not in an iframe, means we used the new tab fallback
+                isFs = true;
+            } else {
+                try {
+                    // We are inside an iframe. Check if parent document is in a fullscreen state
+                    if (window.parent.document.fullscreenElement || window.parent.document.webkitFullscreenElement || window.parent.document.mozFullScreenElement || window.parent.document.msFullscreenElement) {
+                        isFs = true;
+                    }
+                } catch(e) {
+                    // Cross-origin fallback (shouldn't happen here, but robust)
+                }
+            }
+            document.getElementById('btn-exit-fs').style.display = isFs ? 'block' : 'none';
+        }, 500);
+
+        function attemptExitFullscreen() {
+            if (window === window.top) {
+                // If it was opened in a new tab, close it
+                window.close();
+            } else {
+                // Try exiting parent's fullscreen
+                try {
+                    if (window.parent.document.exitFullscreen) {
+                        window.parent.document.exitFullscreen();
+                    } else if (window.parent.document.webkitExitFullscreen) {
+                        window.parent.document.webkitExitFullscreen();
+                    } else if (window.parent.document.mozCancelFullScreen) {
+                        window.parent.document.mozCancelFullScreen();
+                    } else if (window.parent.document.msExitFullscreen) {
+                        window.parent.document.msExitFullscreen();
+                    }
+                } catch(e) {}
+            }
+        }
     </script>
 </body>
 </html>
