@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Posters &mdash; Prasad Sawant</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body { background: var(--ink); color: var(--paper); }
+    body::after { display: none; }
+    nav { background: rgba(10,12,15,0.9); border-bottom: 1px solid rgba(244,240,232,0.07); }
+    .nav-logo { color: var(--paper); }
+    .nav-links a { color: rgba(244,240,232,0.4); }
+    .nav-links a:hover, .nav-links a.active { color: var(--paper); }
+    .nav-contact { background: var(--paper); color: var(--ink) !important; }
+    .nav-contact:hover { background: var(--accent) !important; color: white !important; }
+    
+    .service-hero {
+      padding: 160px 64px 100px;
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+    .service-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(244,240,232,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(244,240,232,0.02) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+    .sh-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; display: flex; align-items: center; gap: 14px; }
+    .sh-label::before { content: ''; width: 26px; height: 1px; background: var(--accent); }
+    .sh-title { font-family: var(--font-display); font-size: clamp(64px, 8vw, 120px); letter-spacing: 2px; line-height: 0.9; margin-bottom: 32px; color: var(--paper); }
+    .sh-desc { font-size: 14px; color: rgba(244,240,232,0.6); max-width: 600px; line-height: 1.8; margin-bottom: 48px; }
+    .sh-features { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 60px; padding-top: 60px; border-top: 1px solid rgba(244,240,232,0.1); max-width: 800px; }
+    .shf-item h3 { font-family: var(--font-serif); font-size: 24px; color: var(--accent); margin-bottom: 12px; }
+    .shf-item p { font-size: 12px; color: rgba(244,240,232,0.45); line-height: 1.7; }
+    footer { background: #060809; }
+  </style>
+</head>
+<body>
+  <div id="cur"></div><div id="cur-r"></div>
+  <nav>
+    <a class="nav-logo" href="index.html">Prasad<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#work" class="active">Work</a></li>
+      <li><a href="index.html#training">Training</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a class="nav-contact" href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="service-hero">
+    <div style="position:relative; z-index:2;">
+      <div class="sh-label">Service Offering</div>
+      <h1 class="sh-title">Security Posters</h1>
+      <p class="sh-desc">Campaign-grade visual assets that reinforce secure behaviour across physical and digital workspaces. Designed for maximum recall and cross-cultural adaptability.</p>
+      <a class="btn btn-red" href="index.html#contact">Discuss a Project &rarr;</a>
+      
+      <div class="sh-features">
+        <div class="shf-item">
+          <h3>Print-Ready</h3>
+          <p>High-fidelity graphics prepared meticulously for CMYK print, scaling beautifully to any physical space or bulletin board.</p>
+        </div>
+        <div class="shf-item">
+          <h3>Digital Native</h3>
+          <p>Optimized digital assets perfect for corporate screensavers, intranet banners, or internal company chat channels.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <footer>
+    <div class="footer-name">Prasad Sawant</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="footer-copy">&copy; 2025 Prasad Sawant</div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

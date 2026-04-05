@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Prasad Sawant — Cybersecurity Awareness Specialist. Building security cultures through immersive learning, phishing simulations, and human-risk programs across 50+ organisations." />
+  <title>Prasad Sawant — Cybersecurity Awareness Specialist</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ══════════════════════════════════
+       HOME — PAGE SPECIFIC STYLES
+       ══════════════════════════════════ */
+
+    /* ─── HERO ─── */
+    #home {
+      min-height: 100vh;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      padding: 148px 64px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-overline {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 36px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      animation: fadeSlideUp 0.8s var(--ease-out) both;
+    }
+
+    .hero-overline::before {
+      content: '';
+      width: 26px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(76px, 9.5vw, 136px);
+      letter-spacing: 2px;
+      line-height: 0.87;
+      margin-bottom: 6px;
+    }
+
+    .hero-name .line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero-name .word {
+      display: inline-block;
+      animation: slideUp 1s var(--ease-out) both;
+    }
+
+    .hero-name .line:nth-child(2) .word {
+      animation-delay: 0.12s;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(110%);
+        opacity: 0;
+      }
+
+      to {
+        transform: none;
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .hero-role {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(20px, 2.4vw, 30px);
+      color: var(--accent);
+      margin-bottom: 44px;
+      animation: fadeSlideUp 1s 0.3s var(--ease-out) both;
+    }
+
+    .hero-desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.88;
+      max-width: 400px;
+      margin-bottom: 52px;
+      animation: fadeSlideUp 1s 0.45s var(--ease-out) both;
+    }
+
+    /* ── STATS ROW ── */
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border-med);
+      max-width: 440px;
+      animation: fadeSlideUp 1s 0.6s var(--ease-out) both;
+      margin-bottom: 44px;
+    }
+
+    .h-stat {
+      flex: 1;
+      padding: 20px 22px;
+      border-right: 1px solid var(--border-med);
+      position: relative;
+    }
+
+    .h-stat:last-child {
+      border-right: none;
+    }
+
+    .h-stat::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: scaleRight 0.7s 1.3s var(--ease-out) both;
+    }
+
+    @keyframes scaleRight {
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    .h-stat-num {
+      font-family: var(--font-display);
+      font-size: 38px;
+      letter-spacing: 1px;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .h-stat-num .suf {
+      color: var(--accent);
+      font-size: 20px;
+    }
+
+    .h-stat-label {
+      font-size: 9.5px;
+      color: var(--muted);
+      margin-top: 5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      animation: fadeSlideUp 1s 0.75s var(--ease-out) both;
+    }
+
+    /* ── HERO RIGHT / PHOTO ── */
+    .hero-right {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      background: var(--warm);
+      border-left: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(200, 64, 26, 0.06) 0%, transparent 55%);
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--steel);
+      overflow: hidden;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-photo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      color: rgba(244, 240, 232, 0.22);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hero-photo-placeholder svg {
+      width: 52px;
+    }
+
+    /* floating accent card */
+    .hero-accent-card {
+      position: absolute;
+      top: 72px;
+      right: -1px;
+      background: var(--accent);
+      color: white;
+      padding: 16px 20px;
+      font-size: 10px;
+      line-height: 1.65;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      max-width: 130px;
+      text-align: center;
+      box-shadow: -6px 6px 0 var(--ink);
+      animation: fadeSlideUp 1s 1s var(--ease-out) both;
+    }
+
+    .hero-accent-card strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 1px;
+      color: white;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    /* vertical scroll hint */
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 64px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      animation: fadeSlideUp 1s 1.4s var(--ease-out) both;
+    }
+
+    .hero-scroll-hint::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 48px;
+      background: var(--border-med);
+      animation: growDown 1s 2s var(--ease-out) both;
+    }
+
+    @keyframes growDown {
+      from {
+        height: 0;
+      }
+
+      to {
+        height: 48px;
+      }
+    }
+
+    /* ─── WORK SECTION ─── */
+    #work {
+      background: var(--warm);
+    }
+
+    .work-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: end;
+      margin-bottom: 72px;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+    }
+
+    .work-item {
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border: 1px solid var(--border-med);
+      border-radius: 8px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 4px 24px rgba(10, 12, 15, 0.04);
+    }
+
+    .work-item::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease-out);
+    }
+
+    .work-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(10, 12, 15, 0.08);
+      border-color: rgba(200, 64, 26, 0.2);
+    }
+
+    .work-item:hover::after {
+      transform: scaleX(1);
+    }
+
+    .wi-top {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(240, 236, 224, 0.3);
+    }
+
+    .wi-num {
+      padding: 24px;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      border-right: 1px solid var(--border);
+    }
+
+    .wi-icon {
+      padding: 24px;
+      font-size: 28px;
+    }
+
+    .wi-info {
+      padding: 40px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wi-name {
+      font-family: var(--font-display);
+      font-size: 32px;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .wi-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      flex: 1;
+      margin-bottom: 32px;
+    }
+
+    .wi-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .wi-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .wi-tag {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .wi-tag.hot {
+      border-color: rgba(200, 64, 26, 0.35);
+      color: var(--accent);
+    }
+
+    .wi-arrow {
+      font-size: 18px;
+      color: var(--muted);
+      transition: transform 0.2s, color 0.2s;
+    }
+
+    .work-item:hover .wi-arrow {
+      transform: translateX(6px);
+      color: var(--accent);
+    }
+
+    /* ─── THREAT PANEL ─── */
+    .threat-panel {
+      margin-top: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid rgba(200, 64, 26, 0.2);
+      background: rgba(200, 64, 26, 0.02);
+      overflow: hidden;
+    }
+
+    .threat-content {
+      padding: 64px;
+    }
+
+    .threat-eyebrow {
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .threat-eyebrow::before {
+      background: rgba(200, 64, 26, 0.6);
+    }
+
+    .threat-title {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 5vw, 68px);
+      letter-spacing: 1px;
+      line-height: 0.9;
+      margin-bottom: 22px;
+    }
+
+    .threat-title .red {
+      color: var(--accent);
+    }
+
+    .threat-body {
+      color: var(--muted);
+      line-height: 1.88;
+      font-size: 12px;
+      margin-bottom: 28px;
+    }
+
+    .threat-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+
+    .tt {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+    }
+
+    .tt-red {
+      border: 1px solid rgba(200, 64, 26, 0.35);
+      color: var(--accent);
+    }
+
+    .tt-grey {
+      border: 1px solid var(--border-med);
+      color: var(--muted);
+    }
+
+    .email-sim {
+      border-left: 1px solid rgba(200, 64, 26, 0.2);
+      background: var(--warm);
+      padding: 52px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .sim-eyebrow {
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sim-eyebrow::before {
+      content: '';
+      width: 16px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .email-card {
+      border: 1px solid var(--border-strong);
+      background: white;
+      font-size: 11.5px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(10, 12, 15, 0.08);
+    }
+
+    .email-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .email-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+
+    .email-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .er-label {
+      color: var(--muted);
+      min-width: 38px;
+      font-size: 10px;
+    }
+
+    .er-val {
+      color: var(--ink);
+      font-size: 10px;
+    }
+
+    .er-danger {
+      color: var(--accent);
+    }
+
+    .email-body-inner {
+      padding: 16px 18px;
+      line-height: 1.75;
+      color: #444;
+      font-size: 11px;
+      font-family: sans-serif;
+    }
+
+    .email-cta-btn {
+      display: inline-block;
+      margin-top: 12px;
+      background: var(--accent);
+      color: white;
+      padding: 8px 18px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .sim-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid rgba(200, 64, 26, 0.28);
+      color: var(--accent);
+      padding: 6px 13px;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .sim-badge::before {
+      content: '⚠';
+    }
+
+    .sim-footnote {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ─── TRAINING SECTION ─── */
+    #training {}
+
+    .training-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
+      margin-top: 72px;
+    }
+
+    .training-types {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+
+    .training-type {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.28s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .training-type:last-child {
+      border-bottom: none;
+    }
+
+    .training-type:hover {
+      background: var(--warm);
+    }
+
+    .tt-accent-bar {
+      width: 0;
+      background: var(--accent);
+      align-self: stretch;
+      transition: width 0.3s var(--ease-out);
+      flex-shrink: 0;
+    }
+
+    .training-type:hover .tt-accent-bar {
+      width: 3px;
+    }
+
+    .tt-icon {
+      padding: 26px 22px;
+      font-size: 20px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .tt-content {
+      padding: 26px 28px;
+    }
+
+    .tt-title {
+      font-family: var(--font-display);
+      font-size: 21px;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .tt-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .training-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .impact-card {
+      border: 1px solid var(--border-strong);
+      padding: 40px;
+      background: var(--warm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .impact-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    .ic-big {
+      font-family: var(--font-display);
+      font-size: 80px;
+      letter-spacing: -1px;
+      line-height: 0.88;
+      color: var(--ink);
+    }
+
+    .ic-big .suf {
+      font-size: 36px;
+      color: var(--accent);
+    }
+
+    .ic-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+      line-height: 1.75;
+    }
+
+    .ic-footnote {
+      font-size: 9.5px;
+      color: var(--muted);
+      margin-top: 6px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .mini-cell {
+      padding: 24px;
+      background: var(--warm);
+    }
+
+    .mini-num {
+      font-family: var(--font-display);
+      font-size: 38px;
+      letter-spacing: 1px;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .mini-num .suf {
+      color: var(--accent);
+      font-size: 22px;
+    }
+
+    .mini-label {
+      font-size: 9.5px;
+      color: var(--muted);
+      margin-top: 5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--warm);
+    }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 96px;
+      align-items: start;
+      margin-top: 72px;
+    }
+
+    .about-photo-wrap {
+      position: relative;
+    }
+
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      background: var(--steel);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .about-photo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(200, 64, 26, 0.12) 0%, transparent 55%);
+      z-index: 1;
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-photo-ph {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: rgba(244, 240, 232, 0.22);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .about-photo-ph svg {
+      width: 50px;
+    }
+
+    .corner-br {
+      position: absolute;
+      bottom: -14px;
+      right: -14px;
+      width: 72px;
+      height: 72px;
+      border: 1px solid var(--accent);
+      pointer-events: none;
+    }
+
+    .corner-tl {
+      position: absolute;
+      top: -14px;
+      left: -14px;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border-med);
+      pointer-events: none;
+    }
+
+    .about-text {}
+
+    .about-quote {
+      font-family: var(--font-serif);
+      font-size: clamp(18px, 2vw, 22px);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--ink);
+      margin-bottom: 32px;
+    }
+
+    .about-quote em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .about-body {
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 12.5px;
+      margin-bottom: 44px;
+    }
+
+    .about-body strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+
+    .skill-cell {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+
+    .skill-cell:nth-child(2n) {
+      border-right: none;
+    }
+
+    .skill-cell:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+
+    .skill-name {
+      font-size: 11.5px;
+      color: var(--ink);
+      margin-bottom: 9px;
+    }
+
+    .skill-bar {
+      height: 2px;
+      background: var(--border);
+    }
+
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+      animation: skillGrow 1.4s var(--ease-out) both;
+    }
+
+    @keyframes skillGrow {
+      from {
+        width: 0 !important;
+      }
+    }
+
+    .creds {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .cred-tag {
+      padding: 9px 16px;
+      border: 1px solid var(--border-strong);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cred-tag::before {
+      content: '✓';
+      color: var(--accent);
+    }
+
+    /* ─── CTA BAND ─── */
+    #contact {
+      background: var(--ink);
+      padding: 120px 64px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    #contact .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(244, 240, 232, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244, 240, 232, 0.02) 1px, transparent 1px);
+      background-size: 44px 44px;
+      pointer-events: none;
+    }
+
+    #contact .top-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(64px, 8.5vw, 120px);
+      letter-spacing: 2px;
+      line-height: 0.88;
+      color: var(--paper);
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .cta-title em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+    }
+
+    .cta-sub {
+      font-size: 12.5px;
+      color: rgba(244, 240, 232, 0.45);
+      max-width: 380px;
+      margin: 0 auto 52px;
+      line-height: 1.88;
+      position: relative;
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      position: relative;
+    }
+
+    .btn-inv {
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .btn-inv:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .contact-links {
+      margin-top: 56px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .contact-links a {
+      color: rgba(244, 240, 232, 0.25);
+      text-decoration: none;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-links a:hover {
+      color: var(--accent);
+    }
+
+    .contact-links a::before {
+      content: '→';
+      color: var(--accent);
+      opacity: 0.5;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .work-item {
+        grid-template-columns: 60px 1fr 44px;
+      }
+
+      .wi-icon,
+      .wi-tags {
+        display: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      #home {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-right {
+        display: none;
+      }
+
+      .hero-left {
+        padding: 130px 24px 72px;
+      }
+
+      .work-header {
+        grid-template-columns: 1fr;
+      }
+
+      .threat-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .email-sim {
+        border-left: none;
+        border-top: 1px solid rgba(200, 64, 26, 0.2);
+      }
+
+      .training-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .about-layout {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .cta-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .contact-links {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="cur"></div>
+  <div id="cur-r"></div>
+
+  <!-- ════════════════ NAV ════════════════ -->
+  <nav>
+    <a class="nav-logo" href="index.html">Prasad<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#training">Training</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a class="nav-contact" href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ════════════════ HERO ════════════════ -->
+  <section id="home">
+    <div class="hero-left">
+      <div class="hero-overline">Cybersecurity Awareness Specialist</div>
+
+      <h1 class="hero-name">
+        <span class="line"><span class="word">PRASAD</span></span>
+        <span class="line"><span class="word">SAWANT</span></span>
+      </h1>
+
+      <div class="hero-role">Building Security Cultures That Last</div>
+
+      <p class="hero-desc">
+        I design human-centred cybersecurity awareness programs — from
+        immersive simulations to enterprise-wide learning strategies —
+        that transform employees from the weakest link into the strongest defence.
+      </p>
+
+      <div class="hero-stats">
+        <div class="h-stat">
+          <div class="h-stat-num"><span data-count="25000" data-suffix="+" class="count-el">25000</span><span
+              class="suf">+</span></div>
+          <div class="h-stat-label">Users Trained</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-num"><span data-count="50" data-suffix="+" class="count-el">50</span><span
+              class="suf">+</span></div>
+          <div class="h-stat-label">Organisations</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-num"><span data-count="7" data-suffix="+" class="count-el">7</span><span
+              class="suf">+</span></div>
+          <div class="h-stat-label">Years Impact</div>
+        </div>
+      </div>
+
+      <div class="hero-ctas">
+        <a class="btn btn-dark" href="#work">Explore Work →</a>
+        <a class="btn btn-outline" href="blog.html">Read the Blog</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-photo">
+        <img src="heroimagetedx1.jpg" alt="Prasad Sawant">
+      </div>
+      <div class="hero-accent-card">
+        <strong>25K+</strong>
+        Professionals<br>Trained Live
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ════════════════ MARQUEE ════════════════ -->
+  <div class="marquee-band">
+    <div class="marquee-track" aria-hidden="true">
+      <span class="marquee-item">Security Awareness <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">25,000+ Learners <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Phishing Simulations <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">SCORM &amp; xAPI <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Gamification <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">50+ Organisations <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Threat Simulation <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Global Delivery <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Security Awareness <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">25,000+ Learners <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Phishing Simulations <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">SCORM &amp; xAPI <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Gamification <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">50+ Organisations <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Threat Simulation <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Global Delivery <span class="marquee-dot">✦</span></span>
+    </div>
+  </div>
+
+  <!-- ════════════════ WORK ════════════════ -->
+  <section id="work">
+    <div class="work-header">
+      <div>
+        <div class="s-label">Multimedia &amp; Engagement</div>
+        <h2 class="s-title">Content that<br><em>changes</em><br>behaviour</h2>
+      </div>
+      <p class="s-body">
+        Every deliverable is engineered around one question:
+        <strong style="color:var(--ink);">will this change how someone acts</strong>
+        when a real threat arrives? Compliance is a floor, not a ceiling.
+      </p>
+    </div>
+
+    <div class="work-grid">
+
+      <!-- Tile 1: Live Trainings -->
+      <a href="live-trainings.html" class="work-item reveal">
+        <div class="wi-top">
+          <div class="wi-icon">👨🏼‍🏫</div>
+        </div>
+        <div class="wi-info">
+          <div class="wi-name">Live Trainings</div>
+          <div class="wi-desc">High-energy in-person and virtual sessions for audiences from 20 to 500+. Live threat
+            demos, real-time phishing tests, interactive polls, and role-specific discussions.</div>
+          <div class="wi-footer">
+            <div class="wi-tags">
+              <span class="wi-tag hot">In-Person & Virtual</span>
+              <span class="wi-tag">Interactive</span>
+            </div>
+            <div class="wi-arrow">→</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tile 2: Posters -->
+      <a href="posters.html" class="work-item reveal stagger-1">
+        <div class="wi-top">
+          <div <div class="wi-icon">📃</div>
+        </div>
+        <div class="wi-info">
+          <div class="wi-name">Security Posters</div>
+          <div class="wi-desc">Campaign-grade visual assets that reinforce secure behaviour across physical and digital
+            workspaces. Designed for maximum recall and cross-cultural adaptability.</div>
+          <div class="wi-footer">
+            <div class="wi-tags">
+              <span class="wi-tag hot">Print-Ready</span>
+              <span class="wi-tag">Digital</span>
+            </div>
+            <div class="wi-arrow">→</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tile 3: Videos -->
+      <a href="videos.html" class="work-item reveal">
+        <div class="wi-top">
+
+          <div class="wi-icon">▶️</div>
+        </div>
+        <div class="wi-info">
+          <div class="wi-name">Explainer Videos</div>
+          <div class="wi-desc">Scenario-based videos that dramatise real attack chains. Animated, live-action, and
+            hybrid formats built to hold attention and drive lasting recall.</div>
+          <div class="wi-footer">
+            <div class="wi-tags">
+              <span class="wi-tag hot">Animated</span>
+              <span class="wi-tag">Scenario-Based</span>
+            </div>
+            <div class="wi-arrow">→</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tile 4: Gamification & SCORM -->
+      <a href="gamification.html" class="work-item reveal stagger-1">
+        <div class="wi-top">
+          <div class="wi-icon">🎮</div>
+        </div>
+        <div class="wi-info">
+          <div class="wi-name">Gamification & E-Learning</div>
+          <div class="wi-desc">LMS-ready (SCORM/xAPI) modules combined with leaderboards, badges, digital escape rooms,
+            and quizzes to transform mandatory compliance into competitive team-building experiences.</div>
+          <div class="wi-footer">
+            <div class="wi-tags">
+              <span class="wi-tag hot">Escape Rooms</span>
+              <span class="wi-tag">SCORM / xAPI</span>
+            </div>
+            <div class="wi-arrow">→</div>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- THREAT PANEL -->
+    <div class="threat-panel reveal" id="threat">
+      <div class="threat-content">
+        <div class="s-label threat-eyebrow">Threat Simulation</div>
+        <h3 class="threat-title">Phishing<br><span class="red">Templates</span><br>&amp; Campaigns</h3>
+        <p class="threat-body">
+          Custom simulation templates engineered to mirror real-world attack vectors —
+          spear phishing, BEC, QR code lures, and smishing.
+          Measure susceptibility, deliver instant teachable moments,
+          and track culture shift over months and quarters.
+        </p>
+        <div class="threat-tags">
+          <span class="tt tt-red">Spear Phishing</span>
+          <span class="tt tt-red">BEC Simulation</span>
+          <span class="tt tt-red">QR Code Lures</span>
+          <span class="tt tt-red">Smishing</span>
+          <span class="tt tt-grey">Remediation Flows</span>
+          <span class="tt tt-grey">Metrics &amp; Reporting</span>
+          <span class="tt tt-grey">Longitudinal Tracking</span>
+        </div>
+        <a class="btn btn-red" href="#contact">Request a Demo →</a>
+      </div>
+
+      <div class="email-sim">
+        <div class="sim-eyebrow">Live Simulation Template</div>
+        <div class="email-card">
+          <div class="email-header">
+            <div class="email-row"><span class="er-label">From:</span><span
+                class="er-val er-danger">it-helpdesk@company-support.net</span></div>
+            <div class="email-row"><span class="er-label">To:</span><span class="er-val">employee@yourcompany.com</span>
+            </div>
+            <div class="email-row"><span class="er-label">Subj:</span><span class="er-val">⚠ Urgent: MFA Reset Required
+                Within 24 Hours</span></div>
+          </div>
+          <div class="email-body-inner">
+            Dear Team Member,<br><br>
+            Our security system has detected unusual login activity on your account.
+            A mandatory multi-factor authentication reset is required.
+            Failure to verify within <strong>24 hours</strong> will result in access suspension.<br><br>
+            <div class="email-cta-btn">Verify My Identity Now →</div>
+          </div>
+        </div>
+        <div class="sim-badge">Simulated Phishing — Prasad Sawant</div>
+        <p class="sim-footnote">Real campaigns include click-rate tracking, instant awareness landing pages, and
+          departmental risk dashboards.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ TRAINING ════════════════ -->
+  <section id="training">
+    <div class="s-label">Interactive Training Delivery</div>
+    <h2 class="s-title">Where people<br><em>actually</em> change</h2>
+
+    <div class="training-layout">
+      <div>
+        <p class="s-body" style="margin-bottom: 52px;">
+          25,000+ learners across 50+ organisations don't happen by accident.
+          Every session is architected for the specific audience — their industry,
+          threat model, seniority, and attention span.
+          Generic is the enemy of behaviour change.
+        </p>
+        <div class="training-types reveal">
+          <div class="training-type">
+            <div class="tt-accent-bar"></div>
+            <div class="tt-icon">🏢</div>
+            <div class="tt-content">
+              <div class="tt-title">In-Person Workshops</div>
+              <div class="tt-desc">Hands-on sessions with live demos, tabletop incident simulations, and group
+                threat-modelling. Engineered for deep retention and post-session behaviour change.</div>
+            </div>
+          </div>
+          <div class="training-type">
+            <div class="tt-accent-bar"></div>
+            <div class="tt-icon">🌐</div>
+            <div class="tt-content">
+              <div class="tt-title">Virtual Instructor-Led Training</div>
+              <div class="tt-desc">Highly interactive online sessions with live polls, breakout rooms, real-time
+                phishing demos, and audience Q&A. Not webinars — training.</div>
+            </div>
+          </div>
+          <div class="training-type">
+            <div class="tt-accent-bar"></div>
+            <div class="tt-icon">🔄</div>
+            <div class="tt-content">
+              <div class="tt-title">Blended Learning Programs</div>
+              <div class="tt-desc">Pre-work SCORM modules + live reinforcement + post-training simulations. Sustained
+                culture shift measured over weeks and quarters, not a single session.</div>
+            </div>
+          </div>
+          <div class="training-type">
+            <div class="tt-accent-bar"></div>
+            <div class="tt-icon">🎯</div>
+            <div class="tt-content">
+              <div class="tt-title">Executive &amp; Leadership Briefings</div>
+              <div class="tt-desc">Board-ready cybersecurity briefings connecting business risk to human behaviour.
+                Tailored for C-suite attention spans and strategic decision-making.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="training-right reveal stagger-1">
+        <div class="impact-card">
+          <div class="ic-big">25K<span class="suf">+</span></div>
+          <div class="ic-desc">Professionals trained through live sessions across India and international markets — each
+            programme designed from scratch for the audience.</div>
+          <div class="ic-footnote">via live sessions · 2018 – present</div>
+        </div>
+        <div class="mini-grid">
+          <div class="mini-cell">
+            <div class="mini-num">50<span class="suf">+</span></div>
+            <div class="mini-label">Organisations</div>
+          </div>
+          <div class="mini-cell">
+            <div class="mini-num">100<span class="suf">%</span></div>
+            <div class="mini-label">Custom Content</div>
+          </div>
+          <div class="mini-cell">
+            <div class="mini-num">7<span class="suf">+</span></div>
+            <div class="mini-label">Years Delivering</div>
+          </div>
+          <div class="mini-cell">
+            <div class="mini-num">0</div>
+            <div class="mini-label">Generic Sessions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ ABOUT ════════════════ -->
+  <section id="about">
+    <div class="about-layout">
+      <div class="about-photo-wrap reveal">
+        <div class="about-photo">
+          <!-- Replace with: <img src="assets/images/prasad-about.jpg" alt="Prasad Sawant"> -->
+          <div class="about-photo-ph">
+            <svg viewBox="0 0 80 80" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="28" r="16" />
+              <path d="M8 72c0-17.7 14.3-32 32-32s32 14.3 32 32" />
+            </svg>
+            <span>Your Photo Here</span>
+          </div>
+        </div>
+        <div class="corner-br"></div>
+        <div class="corner-tl"></div>
+      </div>
+
+      <div class="about-text reveal stagger-1">
+        <div class="s-label">About Prasad Sawant</div>
+        <div class="about-quote">
+          The most sophisticated firewall in the world is a well-informed, <em>genuinely engaged</em> employee.
+        </div>
+        <p class="about-body">
+          I'm a cybersecurity Learning &amp; Development specialist based in Mumbai,
+          with a career built at the precise intersection of human behaviour, instructional design,
+          and the evolving threat landscape.<br><br>
+          Over 7+ years, I've designed and delivered awareness initiatives across
+          <strong>50+ organisations</strong> spanning BFSI, IT, healthcare, and manufacturing —
+          training more than <strong>25,000 professionals</strong> through live sessions alone.<br><br>
+          My approach goes beyond compliance checkboxes. Every programme I design is
+          grounded in behavioural science, audience empathy, and an obsessive attention
+          to what actually changes how people respond to real threats.
+        </p>
+
+        <div class="skills-grid">
+          <div class="skill-cell">
+            <div class="skill-name">Instructional Design</div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width:95%"></div>
+            </div>
+          </div>
+          <div class="skill-cell">
+            <div class="skill-name">Phishing Simulations</div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width:93%"></div>
+            </div>
+          </div>
+          <div class="skill-cell">
+            <div class="skill-name">SCORM / xAPI / LMS</div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width:90%"></div>
+            </div>
+          </div>
+          <div class="skill-cell">
+            <div class="skill-name">Programme Strategy</div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width:88%"></div>
+            </div>
+          </div>
+          <div class="skill-cell">
+            <div class="skill-name">Gamification Design</div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width:85%"></div>
+            </div>
+          </div>
+          <div class="skill-cell">
+            <div class="skill-name">Executive Communication</div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width:82%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="creds">
+          <div class="cred-tag">Security Awareness Pro</div>
+          <div class="cred-tag">Certified Instructional Designer</div>
+          <div class="cred-tag">Mumbai, India</div>
+          <div class="cred-tag">Global Delivery</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ CONTACT ════════════════ -->
+  <section id="contact">
+    <div class="grid-overlay"></div>
+    <div class="top-line"></div>
+
+    <div class="s-label light" style="justify-content:center; position:relative;">Let's Work Together</div>
+    <h2 class="cta-title" style="position:relative;">
+      Let's build a<br><em>safer</em> world<br>together.
+    </h2>
+    <p class="cta-sub">
+      Whether it's a single phishing campaign or an enterprise-wide
+      security culture transformation — let's talk about what's possible.
+    </p>
+    <div class="cta-btns">
+      <a class="btn btn-inv" href="mailto:prasadsawant2497@gmail.com">prasadsawant2497@gmail.com →</a>
+      <a class="btn btn-ghost-light" href="#">Download CV</a>
+    </div>
+
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/prasaddsawant/">LinkedIn</a>
+      <a href="blog.html">Blog</a>
+      <a href="mailto:prasad.sawant@email.com">Email</a>
+    </div>
+  </section>
+
+  <!-- ════════════════ FOOTER ════════════════ -->
+  <footer>
+    <div class="footer-name">Prasad Sawant</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="#work">Work</a>
+      <a href="#training">Training</a>
+      <a href="blog.html">Blog</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-copy">© 2025 Prasad Sawant</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Counter animation for hero stats
+    const countEls = document.querySelectorAll('.count-el');
+    const countObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.count);
+          let n = 0;
+          const step = target / 55;
+          const timer = setInterval(() => {
+            n = Math.min(n + step, target);
+            el.textContent = Math.floor(n).toLocaleString();
+            if (n >= target) clearInterval(timer);
+          }, 18);
+          countObs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.6 });
+    countEls.forEach(el => countObs.observe(el));
+  </script>
+</body>
+
+</html>

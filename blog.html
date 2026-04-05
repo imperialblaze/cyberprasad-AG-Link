@@ -1,0 +1,976 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Prasad Sawant's Blog â€” Insights on cybersecurity awareness, human risk, phishing simulations, and building security culture at scale." />
+  <title>Blog â€” Prasad Sawant</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       BLOG â€” PAGE SPECIFIC STYLES
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+
+
+
+
+    /* â”€â”€â”€ BLOG HERO â”€â”€â”€ */
+    .blog-hero {
+      padding: 148px 64px 80px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: radial-gradient(ellipse at top right, rgba(200, 64, 26, 0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* grid texture */
+    .blog-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(10, 12, 15, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10, 12, 15, 0.02) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .bh-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .bh-label {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .bh-label::before {
+      content: '';
+      width: 26px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .bh-title {
+      font-family: var(--font-display);
+      font-size: clamp(80px, 11vw, 160px);
+      letter-spacing: 3px;
+      line-height: 0.86;
+      color: var(--ink);
+      margin-bottom: 32px;
+      animation: slideUp 0.9s var(--ease-out) both;
+    }
+
+    .bh-title em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+
+      to {
+        transform: none;
+        opacity: 1;
+      }
+    }
+
+    .bh-desc {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.88;
+      animation: slideUp 0.9s 0.2s var(--ease-out) both;
+    }
+
+    .bh-meta {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      animation: slideUp 0.9s 0.35s var(--ease-out) both;
+    }
+
+    .bh-stat {}
+
+    .bh-stat-num {
+      font-family: var(--font-display);
+      font-size: 34px;
+      letter-spacing: 1px;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .bh-stat-num span {
+      color: var(--accent);
+    }
+
+    .bh-stat-label {
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .bh-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--border-med);
+    }
+
+    /* â”€â”€â”€ FEATURED ARTICLE â”€â”€â”€ */
+    .featured-section {
+      padding: 0 64px 80px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .featured-label {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 28px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .featured-label::before {
+      content: '';
+      width: 26px;
+      height: 1px;
+      background: var(--border-strong);
+    }
+
+    .featured-article {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s;
+    }
+
+    .featured-article:hover {
+      border-color: rgba(200, 64, 26, 0.4);
+    }
+
+    .fa-image {
+      background: var(--steel);
+      aspect-ratio: 4/3;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fa-image-bg {
+      position: absolute;
+      inset: 0;
+      background: url('assets/images/thumb_featured.png') center/cover no-repeat;
+    }
+
+    .fa-image-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200, 64, 26, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200, 64, 26, 0.08) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    .fa-image-label {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      font-family: var(--font-display);
+      font-size: 80px;
+      letter-spacing: 2px;
+      color: rgba(200, 64, 26, 0.12);
+      line-height: 1;
+      user-select: none;
+    }
+
+    .fa-category-tag {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: var(--accent);
+      color: white;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+    }
+
+    .fa-content {
+      padding: 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .fa-top {}
+
+    .fa-meta {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .fa-title {
+      font-family: var(--font-serif);
+      font-size: clamp(26px, 2.5vw, 36px);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 20px;
+      transition: color 0.2s;
+    }
+
+    .featured-article:hover .fa-title {
+      color: var(--accent);
+    }
+
+    .fa-excerpt {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.88;
+    }
+
+    .fa-bottom {
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .fa-read {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.2s;
+    }
+
+    .featured-article:hover .fa-read {
+      gap: 14px;
+    }
+
+    .fa-read-time {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* â”€â”€â”€ FILTER BAR â”€â”€â”€ */
+    .filter-bar {
+      padding: 32px 64px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-size: 9.5px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 8px;
+    }
+
+    .filter-btn {
+      padding: 7px 16px;
+      border: 1px solid var(--border-med);
+      background: transparent;
+      color: rgba(10, 12, 15, 0.6);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: none;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--muted);
+      color: var(--ink);
+    }
+
+    .filter-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(200, 64, 26, 0.06);
+    }
+
+    /* â”€â”€â”€ ARTICLE GRID â”€â”€â”€ */
+    .articles-section {
+      padding: 60px 64px 120px;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .article-card {
+      background: var(--warm);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      transition: opacity 0.35s, transform 0.35s, background 0.28s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-card:hover {
+      background: var(--paper);
+    }
+
+    .ac-image {
+      aspect-ratio: 16/9;
+      background: var(--steel);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .ac-image-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .ac-image-num {
+      position: absolute;
+      bottom: 12px;
+      right: 16px;
+      font-family: var(--font-display);
+      font-size: 52px;
+      letter-spacing: 2px;
+      line-height: 1;
+      color: rgba(10, 12, 15, 0.04);
+      user-select: none;
+    }
+
+    .ac-cat-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      font-size: 8.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      color: white;
+    }
+
+    .cat-awareness {
+      background: rgba(200, 64, 26, 0.85);
+    }
+
+    .cat-gamification {
+      background: rgba(184, 151, 58, 0.85);
+    }
+
+    .cat-design {
+      background: rgba(42, 53, 69, 0.95);
+      border: 1px solid var(--border-strong);
+    }
+
+    .cat-culture {
+      background: rgba(30, 42, 56, 0.95);
+      border: 1px solid var(--border-strong);
+    }
+
+    .cat-technology {
+      background: rgba(60, 80, 100, 0.85);
+    }
+
+    .cat-research {
+      background: rgba(100, 60, 80, 0.85);
+    }
+
+    .ac-content {
+      padding: 28px 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ac-meta {
+      font-size: 9.5px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 13px;
+    }
+
+    .ac-title {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 1.22;
+      color: var(--ink);
+      margin-bottom: 13px;
+      transition: color 0.2s;
+      flex: 1;
+    }
+
+    .article-card:hover .ac-title {
+      color: var(--accent);
+    }
+
+    .ac-excerpt {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.78;
+      margin-bottom: 24px;
+    }
+
+    .ac-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .ac-read {
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+
+    .article-card:hover .ac-read {
+      gap: 10px;
+    }
+
+    .ac-time {
+      font-size: 9.5px;
+      color: var(--muted);
+    }
+
+    /* Image backgrounds per category */
+    .bg-1 {
+      background: url('assets/images/thumb_awareness.png') center/cover no-repeat;
+    }
+
+    .bg-2 {
+      background: url('assets/images/thumb_gamification.png') center/cover no-repeat;
+    }
+
+    .bg-3 {
+      background: url('assets/images/thumb_design.png') center/cover no-repeat;
+    }
+
+    .bg-4 {
+      background: url('assets/images/thumb_culture.png') center/cover no-repeat;
+    }
+
+    .bg-5 {
+      background: url('assets/images/thumb_tech.png') center/cover no-repeat;
+    }
+
+    .bg-6 {
+      background: url('assets/images/thumb_tech.png') center/cover no-repeat;
+    }
+
+    /* â”€â”€â”€ NEWSLETTER / SUBSCRIBE BAND â”€â”€â”€ */
+    .subscribe-band {
+      margin: 0 64px;
+      border: 1px solid var(--border);
+      padding: 60px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subscribe-band::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    .sb-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 56px);
+      letter-spacing: 1px;
+      line-height: 0.95;
+      color: var(--ink);
+    }
+
+    .sb-title em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+    }
+
+    .sb-sub {
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.6);
+      line-height: 1.85;
+      margin-top: 12px;
+    }
+
+    .sb-form {
+      display: flex;
+      gap: 0;
+    }
+
+    .sb-input {
+      flex: 1;
+      background: var(--warm);
+      border: 1px solid rgba(10, 12, 15, 0.12);
+      border-right: none;
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 14px 20px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .sb-input::placeholder {
+      color: rgba(10, 12, 15, 0.4);
+    }
+
+    .sb-input:focus {
+      border-color: rgba(200, 64, 26, 0.5);
+    }
+
+    .sb-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .sb-btn:hover {
+      background: var(--accent-light);
+    }
+
+    .sb-note {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+
+
+    /* â”€â”€â”€ RESPONSIVE â”€â”€â”€ */
+    @media (max-width: 900px) {
+      .blog-hero {
+        padding: 130px 24px 60px;
+      }
+
+      .featured-section,
+      .filter-bar {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .featured-article {
+        grid-template-columns: 1fr;
+      }
+
+      .fa-image {
+        aspect-ratio: 3/2;
+      }
+
+      .articles-section {
+        padding: 40px 24px 80px;
+      }
+
+      .articles-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .subscribe-band {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin: 0 24px;
+        padding: 40px 28px;
+      }
+
+      .bh-meta {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .bh-divider {
+        display: none;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .articles-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="cur"></div>
+  <div id="cur-r"></div>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• NAV â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <nav>
+    <a class="nav-logo" href="index.html">Prasad<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#training">Training</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a class="nav-contact" href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• BLOG HERO â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <header class="blog-hero">
+    <div class="bh-inner">
+      <div class="bh-label">Thoughts from the field</div>
+      <h1 class="bh-title">The<br><em>Blog</em></h1>
+      <p class="bh-desc">
+        Practitioner-level insights on building security cultures, designing
+        phishing simulations that actually work, and the human side of cyber risk.
+        Written from 7+ years in the trenches with 25,000+ learners.
+      </p>
+      <div class="bh-meta">
+        <div class="bh-stat">
+          <div class="bh-stat-num">18<span>+</span></div>
+          <div class="bh-stat-label">Articles Published</div>
+        </div>
+        <div class="bh-divider"></div>
+        <div class="bh-stat">
+          <div class="bh-stat-num">5</div>
+          <div class="bh-stat-label">Topics Covered</div>
+        </div>
+        <div class="bh-divider"></div>
+        <div class="bh-stat">
+          <div class="bh-stat-num">~6<span>min</span></div>
+          <div class="bh-stat-label">Avg Read Time</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• FEATURED ARTICLE â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <div class="featured-section">
+    <div class="featured-label">Featured Article</div>
+    <a class="featured-article" href="blog-single-1.html"
+      style="text-decoration:none; display:grid; grid-template-columns:1fr 1fr;">
+      <div class="fa-image">
+        <div class="fa-image-bg"></div>
+        <div class="fa-image-pattern"></div>
+        <div class="fa-image-label">PHISH</div>
+        <div class="fa-category-tag" style="background:var(--accent);">Security Awareness</div>
+      </div>
+      <div class="fa-content">
+        <div class="fa-top">
+          <div class="fa-meta">March 2025 &nbsp;Â·&nbsp; 8 min read &nbsp;Â·&nbsp; Prasad Sawant</div>
+          <div class="fa-title">Why Your Phishing Simulations Are Failing â€” And What To Do Instead</div>
+          <div class="fa-excerpt">
+            Most organisations run phishing simulations and call it a programme. But click rates are
+            a vanity metric. The real question is: does your workforce know what to do <em>after</em> they click?
+            Here's how to design simulation programmes that change behaviour, not just measure failure.
+          </div>
+        </div>
+        <div class="fa-bottom">
+          <span class="fa-read">Read Full Article â†’</span>
+          <span class="fa-read-time">8 min read</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• FILTER BAR â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <div class="filter-bar">
+    <span class="filter-label">Filter by:</span>
+    <button class="filter-btn active" data-filter="all">All Articles</button>
+    <button class="filter-btn" data-filter="awareness">Security Awareness</button>
+    <button class="filter-btn" data-filter="gamification">Gamification</button>
+    <button class="filter-btn" data-filter="design">L&amp;D Design</button>
+    <button class="filter-btn" data-filter="culture">Security Culture</button>
+    <button class="filter-btn" data-filter="technology">Technology</button>
+    <button class="filter-btn" data-filter="research">Research</button>
+  </div>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• ARTICLE GRID â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <div class="articles-section">
+    <div class="articles-grid">
+
+      <!-- Article 1 -->
+      <a class="article-card reveal" href="blog-single-2.html" data-category="gamification"
+        style="text-decoration:none;">
+        <div class="ac-image">
+          <div class="ac-image-bg bg-2"></div>
+          <div class="ac-image-num">02</div>
+          <div class="ac-cat-tag cat-gamification">Gamification</div>
+        </div>
+        <div class="ac-content">
+          <div class="ac-meta">February 2025</div>
+          <div class="ac-title">Security Escape Rooms: A Practitioner's Guide to Running Them at Scale</div>
+          <div class="ac-excerpt">How we turned a tabletop incident response exercise into a fully gamified escape room
+            â€” and what surprised us about the results.</div>
+          <div class="ac-footer">
+            <span class="ac-read">Read Article â†’</span>
+            <span class="ac-time">6 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 2 -->
+      <a class="article-card reveal stagger-1" href="blog-single-3.html" data-category="design"
+        style="text-decoration:none;">
+        <div class="ac-image">
+          <div class="ac-image-bg bg-3"></div>
+          <div class="ac-image-num">03</div>
+          <div class="ac-cat-tag cat-design">L&D Design</div>
+        </div>
+        <div class="ac-content">
+          <div class="ac-meta">January 2025</div>
+          <div class="ac-title">The 5-Minute Rule: Designing Micro-Learning for Busy Employees</div>
+          <div class="ac-excerpt">Attention is the scarcest resource in any organisation. Here's the framework I use to
+            compress security training into moments that stick.</div>
+          <div class="ac-footer">
+            <span class="ac-read">Read Article â†’</span>
+            <span class="ac-time">5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 3 -->
+      <a class="article-card reveal stagger-2" href="blog-single-4.html" data-category="culture"
+        style="text-decoration:none;">
+        <div class="ac-image">
+          <div class="ac-image-bg bg-4"></div>
+          <div class="ac-image-num">04</div>
+          <div class="ac-cat-tag cat-culture">Security Culture</div>
+        </div>
+        <div class="ac-content">
+          <div class="ac-meta">December 2024</div>
+          <div class="ac-title">From Compliance to Culture: A Security Leader's Practical Roadmap</div>
+          <div class="ac-excerpt">Compliance training checks a box. Culture change saves organisations. Here's what
+            separates programmes that last from those that fade in 90 days.</div>
+          <div class="ac-footer">
+            <span class="ac-read">Read Article â†’</span>
+            <span class="ac-time">7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 4 -->
+      <a class="article-card reveal" href="blog-single-5.html" data-category="technology" style="text-decoration:none;">
+        <div class="ac-image">
+          <div class="ac-image-bg bg-5"></div>
+          <div class="ac-image-num">05</div>
+          <div class="ac-cat-tag cat-technology">Technology</div>
+        </div>
+        <div class="ac-content">
+          <div class="ac-meta">November 2024</div>
+          <div class="ac-title">SCORM vs xAPI in 2025: Which Standard Actually Serves Security Awareness?</div>
+          <div class="ac-excerpt">Both standards have their place. The one that serves your awareness programme depends
+            on how you measure behaviour â€” and most teams measure the wrong things.</div>
+          <div class="ac-footer">
+            <span class="ac-read">Read Article â†’</span>
+            <span class="ac-time">4 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 5 -->
+      <a class="article-card reveal stagger-1" href="blog-single-6.html" data-category="research"
+        style="text-decoration:none;">
+        <div class="ac-image">
+          <div class="ac-image-bg bg-6"></div>
+          <div class="ac-image-num">06</div>
+          <div class="ac-cat-tag cat-research">Research</div>
+        </div>
+        <div class="ac-content">
+          <div class="ac-meta">October 2024</div>
+          <div class="ac-title">What 25,000 Trained Users Taught Me About Human Risk</div>
+          <div class="ac-excerpt">After training 25,000+ employees across 50+ organisations, patterns emerge. This is
+            what the data says about how humans actually make security decisions under pressure.</div>
+          <div class="ac-footer">
+            <span class="ac-read">Read Article â†’</span>
+            <span class="ac-time">10 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 6 -->
+      <a class="article-card reveal stagger-2" href="blog-single-7.html" data-category="awareness"
+        style="text-decoration:none;">
+        <div class="ac-image">
+          <div class="ac-image-bg bg-1"></div>
+          <div class="ac-image-num">07</div>
+          <div class="ac-cat-tag cat-awareness">Security Awareness</div>
+        </div>
+        <div class="ac-content">
+          <div class="ac-meta">September 2024</div>
+          <div class="ac-title">The Anatomy of a Perfect Phishing Template: What Makes Employees Click</div>
+          <div class="ac-excerpt">Understanding why people click is the first step to designing simulations â€” and
+            training â€” that genuinely reduces organisational risk.</div>
+          <div class="ac-footer">
+            <span class="ac-read">Read Article â†’</span>
+            <span class="ac-time">6 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 7 -->
+      <a class="article-card reveal" href="blog-single-8.html" data-category="design" style="text-decoration:none;">
+        <div class="ac-image">
+          <div class="ac-image-bg bg-3"></div>
+          <div class="ac-image-num">08</div>
+          <div class="ac-cat-tag cat-design">L&D Design</div>
+        </div>
+        <div class="ac-content">
+          <div class="ac-meta">August 2024</div>
+          <div class="ac-title">Designing for Sceptics: How to Engage the Hardest Employees to Train</div>
+          <div class="ac-excerpt">Every organisation has them â€” the employees who have seen every awareness campaign
+            and tuned them all out. Here's how to reach them anyway.</div>
+          <div class="ac-footer">
+            <span class="ac-read">Read Article â†’</span>
+            <span class="ac-time">5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 8 -->
+      <a class="article-card reveal stagger-1" href="blog-single-9.html" data-category="culture"
+        style="text-decoration:none;">
+        <div class="ac-image">
+          <div class="ac-image-bg bg-4"></div>
+          <div class="ac-image-num">09</div>
+          <div class="ac-cat-tag cat-culture">Security Culture</div>
+        </div>
+        <div class="ac-content">
+          <div class="ac-meta">July 2024</div>
+          <div class="ac-title">Measuring Security Culture: Beyond Click Rates and Completion Certificates</div>
+          <div class="ac-excerpt">The metrics most teams report to the board tell almost nothing about actual risk
+            reduction. Here's a framework for measuring what actually matters.</div>
+          <div class="ac-footer">
+            <span class="ac-read">Read Article â†’</span>
+            <span class="ac-time">8 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 9 -->
+      <a class="article-card reveal stagger-2" href="blog-single-10.html" data-category="gamification"
+        style="text-decoration:none;">
+        <div class="ac-image">
+          <div class="ac-image-bg bg-2"></div>
+          <div class="ac-image-num">10</div>
+          <div class="ac-cat-tag cat-gamification">Gamification</div>
+        </div>
+        <div class="ac-content">
+          <div class="ac-meta">June 2024</div>
+          <div class="ac-title">Points, Badges, Leaderboards: When Gamification Backfires in Security Training</div>
+          <div class="ac-excerpt">Gamification is powerful â€” when applied correctly. This is an honest look at the
+            mistakes I've made and the patterns that actually drive behaviour change.</div>
+          <div class="ac-footer">
+            <span class="ac-read">Read Article â†’</span>
+            <span class="ac-time">7 min read</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SUBSCRIBE â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <div class="subscribe-band reveal">
+    <div>
+      <div class="sb-title">Stay<br><em>sharp.</em></div>
+      <p class="sb-sub">New articles on security awareness, human risk, and L&D design straight to your inbox. No noise,
+        no spam.</p>
+    </div>
+    <div>
+      <div class="sb-form">
+        <input class="sb-input" type="email" placeholder="your@email.com" />
+        <button class="sb-btn">Subscribe â†’</button>
+      </div>
+      <p class="sb-note">One email when a new article drops. Unsubscribe any time.</p>
+    </div>
+  </div>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• FOOTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <footer>
+    <div class="footer-name">Prasad Sawant</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#training">Training</a>
+      <a href="blog.html">Blog</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="footer-copy">Â© 2025 Prasad Sawant</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
