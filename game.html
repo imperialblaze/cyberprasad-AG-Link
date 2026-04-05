@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>? SPOT THE PHISH ?</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --neon-green: #0f0;
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+            --bg-color: #050510;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--neon-green);
+            font-family: 'Share Tech Mono', monospace;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle at center, #110022 0%, #050510 100%);
+        }
+
+        /* CRT Scanline Effect */
+        body::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 100;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        #game-container {
+            width: 90%;
+            max-width: 800px;
+            background: rgba(0, 20, 0, 0.6);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px var(--neon-blue), inset 0 0 20px var(--neon-blue);
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            display: none; /* Hidden until name is entered */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed var(--neon-pink);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            animation: glitch 2s infinite;
+        }
+
+        .score-board {
+            font-size: 1.5rem;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        #email-display {
+            background: #000;
+            border: 1px solid var(--neon-green);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+            box-shadow: inset 0 0 15px var(--neon-green);
+            min-height: 250px;
+        }
+
+        .email-header { margin-bottom: 15px; font-size: 1.1rem; }
+        .email-header span { color: #888; }
+        .email-body { white-space: pre-wrap; font-size: 1.2rem; line-height: 1.5; }
+        .fake-link { color: var(--neon-blue); text-decoration: underline; cursor: pointer; }
+
+        .controls { display: flex; gap: 20px; justify-content: center; }
+
+        button {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.5rem;
+            padding: 15px 40px;
+            cursor: pointer;
+            background: transparent;
+            text-transform: uppercase;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .btn-phish {
+            color: var(--neon-pink);
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+        .btn-phish:hover {
+            background: var(--neon-pink);
+            color: #000;
+            box-shadow: 0 0 30px var(--neon-pink);
+            transform: scale(1.1) rotate(-2deg);
+        }
+
+        .btn-legit {
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+        .btn-legit:hover {
+            background: var(--neon-green);
+            color: #000;
+            box-shadow: 0 0 30px var(--neon-green);
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        /* Result Overlay */
+        #result-overlay {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            border-radius: 15px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            z-index: 50;
+        }
+
+        #result-title { font-size: 3rem; margin-bottom: 20px; text-transform: uppercase; }
+        .correct { color: var(--neon-green); text-shadow: 0 0 20px var(--neon-green); }
+        .wrong { color: #ff0000; text-shadow: 0 0 20px #ff0000; }
+        
+        #result-explanation { font-size: 1.2rem; color: #fff; margin-bottom: 30px; line-height: 1.6; }
+
+        .btn-next {
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            background: transparent;
+        }
+        .btn-next:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
+
+        /* Start Screen */
+        #start-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+        #start-screen h1 { font-size: 5rem; margin-bottom: 20px; text-align: center;}
+        #start-screen p { font-size: 1.5rem; margin-bottom: 30px; color: var(--neon-blue); }
+
+        /* Input styling */
+        #player-alias {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.5rem;
+            padding: 15px;
+            margin-bottom: 30px;
+            width: 80%;
+            max-width: 400px;
+            background: rgba(0, 20, 0, 0.8);
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            text-align: center;
+            outline: none;
+            box-shadow: 0 0 15px var(--neon-green);
+            border-radius: 5px;
+            text-transform: uppercase;
+        }
+        #player-alias::placeholder {
+            color: rgba(0, 255, 0, 0.4);
+        }
+        #player-alias:focus {
+            box-shadow: 0 0 25px var(--neon-green);
+            background: rgba(0, 40, 0, 0.9);
+        }
+
+        /* Animations */
+        @keyframes glitch {
+            0% { text-shadow: 2px 0 var(--neon-blue), -2px 0 red; }
+            20% { text-shadow: -2px 0 var(--neon-blue), 2px 0 red; }
+            40% { text-shadow: 2px 0 var(--neon-blue), -2px 0 red; }
+            60% { text-shadow: -2px 0 var(--neon-blue), 2px 0 red; transform: translate(1px, 1px); }
+            80% { text-shadow: 2px 0 var(--neon-blue), -2px 0 red; transform: translate(-1px, -1px); }
+            100% { text-shadow: -2px 0 var(--neon-blue), 2px 0 red; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen">
+        <h1>SPOT THE PHISH</h1>
+        <p>Analyze the intercepts. Catch the hackers. Survive.</p>
+        <input type="text" id="player-alias" placeholder="ENTER ALIAS (e.g. Cyber Prasad)..." autocomplete="off" />
+        <button class="btn-legit" onclick="startGame()">INITIATE SYSTEM</button>
+    </div>
+
+    <div id="game-container">
+        <header>
+            <h1>THREAT RADAR</h1>
+            <div class="score-board">SCORE: <span id="score">0</span> / <span id="total-levels">0</span></div>
+        </header>
+
+        <div id="email-display">
+            <div class="email-header">
+                <strong>FROM:</strong> <span id="e-sender">...</span><br>
+                <strong>SUBJECT:</strong> <span id="e-subject">...</span>
+            </div>
+            <hr style="border: 0; border-top: 1px dashed var(--neon-green); margin-bottom: 15px;">
+            <div class="email-body" id="e-body">...</div>
+        </div>
+
+        <div class="controls">
+            <button class="btn-phish" onclick="makeGuess(true)">?? IT'S A PHISH!</button>
+            <button class="btn-legit" onclick="makeGuess(false)">? LOOKS LEGIT</button>
+        </div>
+
+        <div id="result-overlay">
+            <h2 id="result-title">RESULT</h2>
+            <p id="result-explanation">Explanation goes here...</p>
+            <button class="btn-next" onclick="nextLevel()">NEXT INTERCEPT >></button>
+        </div>
+    </div>
+
+    <script>
+        // Game Data with [NAME] placeholders
+        const scenarios = [
+            {
+                sender: "Security Bot <admin@paypaI-security.com>", 
+                subject: "URGENT: Your account will be locked in 24 hours",
+                body: "Dear [NAME],\n\nWe detected unauthorized login attempts from a foreign IP address.\n\nTo prevent account suspension, verify your identity immediately by clicking the link below.\n\n<span class='fake-link'>http://secure-login-paypal.net/auth</span>\n\nFailure to do so will result in permanent loss of funds.",
+                isPhish: true,
+                reason: "Look closely at the sender domain ('paypaI' uses an 'I' instead of an 'L'). The message creates a false sense of urgency and points to an unofficial, non-PayPal URL."
+            },
+            {
+                sender: "HR Department <hr@yourcompany.com>",
+                subject: "Reminder: Open Enrollment for Health Benefits",
+                body: "Hi [NAME],\n\nJust a quick reminder that open enrollment for next year's health benefits closes this Friday at 5 PM.\n\nPlease review the updated benefits package on our internal portal here:\n<span class='fake-link'>https://portal.yourcompany.local/benefits</span>\n\nThanks,\nThe HR Team",
+                isPhish: false,
+                reason: "This is a legitimate internal email. The sender domain matches your company, the tone is professional but not threatening, and the link points to a standard internal portal."
+            },
+            {
+                sender: "IT Helpdesk <support@it-desk-help.net>",
+                subject: "Mandatory Password Update Required",
+                body: "ATTENTION [NAME],\n\nYour Office365 password expires in 2 hours. \n\nClick below to keep current password:\n<span class='fake-link'>http://bit.ly/update-pass-365</span>\n\nDo not reply to this email.",
+                isPhish: true,
+                reason: "An artificial deadline (2 hours), a spoofed external IT domain, and worst of all: a shortened URL (bit.ly) used to hide the true destination of the link."
+            },
+            {
+                sender: "Netflix <info@mailer.netflix.com>",
+                subject: "New device signed in to your account",
+                body: "Hi [NAME],\n\nA new device just signed in to your Netflix account.\n\nDevice: Smart TV\nLocation: Mumbai, India\n\nIf this was you, you can safely ignore this email. If this wasn't you, we recommend changing your password immediately.\n\n<span class='fake-link'>https://www.netflix.com/YourAccount</span>",
+                isPhish: false,
+                reason: "Legitimate security alert. The domain is officially associated with Netflix, it doesn't force you into clicking a link with threats, and the URL is the official secure domain."
+            },
+            {
+                sender: "CEO <ceo.name@gmail.com>",
+                subject: "Are you at your desk?",
+                body: "[NAME], I am in a meeting and need a quick favor. Can you purchase 5 Apple Gift Cards ($100 each) for some client rewards we need to send out today? \n\nI will reimburse you before the end of the day. Please reply to me with the codes as soon as you have them.\n\nThanks,\nCEO",
+                isPhish: true,
+                reason: "This is a classic 'CEO Fraud' / Spear-phishing attack. The attacker is using a personal Gmail account pretending to be an executive, using your name to build trust, and asking for untraceable gift cards."
+            }
+        ];
+
+        // Game State
+        let currentLevel = 0;
+        let score = 0;
+        let audioCtx;
+        let playerName = "AGENT";
+
+        // Initialize Audio Context
+        function initAudio() {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            audioCtx = new AudioContext();
+        }
+
+        // Synthesize Sound Effects
+        function playSound(type) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            if (type === 'success') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime); // A4
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); 
+                gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.5);
+            } else if (type === 'fail') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.3);
+                gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            }
+        }
+
+        function startGame() {
+            // Grab the user's name
+            const inputName = document.getElementById('player-alias').value.trim();
+            if (inputName !== "") {
+                playerName = inputName;
+            }
+
+            initAudio();
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('game-container').style.display = 'block';
+            document.getElementById('total-levels').innerText = scenarios.length;
+            loadLevel();
+        }
+
+        function loadLevel() {
+            if (currentLevel >= scenarios.length) {
+                endGame();
+                return;
+            }
+            
+            const data = scenarios[currentLevel];
+            document.getElementById('e-sender').innerText = data.sender;
+            document.getElementById('e-subject').innerText = data.subject;
+            
+            // Inject the personalized name into the email body
+            const personalizedBody = data.body.replace(/\[NAME\]/g, playerName);
+            document.getElementById('e-body').innerHTML = personalizedBody; 
+            
+            document.getElementById('result-overlay').style.display = 'none';
+        }
+
+        function makeGuess(userGuessedPhish) {
+            const data = scenarios[currentLevel];
+            const isCorrect = userGuessedPhish === data.isPhish;
+            
+            const overlay = document.getElementById('result-overlay');
+            const title = document.getElementById('result-title');
+            const explanation = document.getElementById('result-explanation');
+
+            overlay.style.display = 'flex';
+
+            if (isCorrect) {
+                playSound('success');
+                score++;
+                document.getElementById('score').innerText = score;
+                title.innerText = `ACCESS GRANTED, ${playerName.toUpperCase()}`;
+                title.className = "correct";
+            } else {
+                playSound('fail');
+                title.innerText = `SYSTEM BREACH: WAKE UP, ${playerName.toUpperCase()}`;
+                title.className = "wrong";
+            }
+
+            explanation.innerText = data.reason;
+        }
+
+        function nextLevel() {
+            currentLevel++;
+            loadLevel();
+        }
+
+        function endGame() {
+            const container = document.getElementById('game-container');
+            let message = "";
+            if (score === scenarios.length) message = "EXPERT DEFENDER! Perfect Score.";
+            else if (score > scenarios.length / 2) message = "NOT BAD. But there's room for improvement.";
+            else message = "YOUR SYSTEM HAS BEEN COMPROMISED. More training required.";
+
+            container.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <h1 style="font-size: 3rem; margin-bottom: 20px; color: var(--neon-blue);">EVALUATION COMPLETE</h1>
+                    <h2 class="score-board" style="font-size: 2rem; margin-bottom: 20px;">OPERATIVE: ${playerName.toUpperCase()}</h2>
+                    <h2 class="score-board" style="font-size: 2rem; margin-bottom: 20px;">FINAL SCORE: ${score} / ${scenarios.length}</h2>
+                    <p style="font-size: 1.5rem; color: #fff; margin-bottom: 40px;">${message}</p>
+                    <button class="btn-legit" onclick="location.reload()">REBOOT SYSTEM</button>
+                </div>
+            `;
+        }
+
+        // Allow pressing "Enter" on the input field to start the game
+        document.getElementById("player-alias").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                startGame();
+            }
+        });
+    </script>
+</body>
+</html>

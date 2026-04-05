@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -70,6 +70,23 @@
         <div class="shf-item">
           <h3>SCORM / xAPI</h3>
           <p>Enterprise-compliant packaging ensuring modules seamlessly integrate with existing corporate Learning Management Systems.</p>
+        </div>
+      </div>
+
+      <div class="game-showcase" style="margin-top: 60px; padding-top: 60px; border-top: 1px solid rgba(244,240,232,0.1); max-width: 800px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 20px;">
+          <div style="flex: 1; min-width: 300px;">
+            <div class="sh-label" style="margin-bottom: 16px;">Interactive Game</div>
+            <h3 style="font-family: var(--font-serif); font-size: 32px; color: var(--accent); margin-bottom: 16px;">Spot the Phish</h3>
+            <p style="font-size: 14px; color: rgba(244,240,232,0.6); line-height: 1.8; margin-bottom: 0;">Test your ability to identify common phishing indicators in real-world scenarios. Play the interactive simulation below.</p>
+          </div>
+          <button onclick="document.getElementById('phish-game').requestFullscreen()" style="padding: 10px 20px; background: transparent; border: 1px solid var(--accent); color: var(--accent); border-radius: 4px; cursor: pointer; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; transition: 0.3s;" onmouseover="this.style.background='var(--accent)'; this.style.color='#fff'" onmouseout="this.style.background='transparent'; this.style.color='var(--accent)'">
+            Fullscreen
+          </button>
+        </div>
+        
+        <div class="game-thumbnail" style="position: relative; width: 100%; height: 750px; background: #060809; border: 1px solid rgba(200,64,26,0.3); border-radius: 8px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.4);">
+          <iframe id="phish-game" src="game.html" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: block;" title="Spot the Phish Game"></iframe>
         </div>
       </div>
     </div>
