@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -39,6 +39,80 @@
     .shf-item h3 { font-family: var(--font-serif); font-size: 24px; color: var(--accent); margin-bottom: 12px; }
     .shf-item p { font-size: 12px; color: rgba(244,240,232,0.45); line-height: 1.7; }
     footer { background: #060809; }
+
+    /* Poster Gallery Styles */
+    .poster-gallery {
+      margin-top: 80px;
+      padding-top: 60px;
+      border-top: 1px solid rgba(244,240,232,0.1);
+      width: 100%;
+    }
+    
+    .pg-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .poster-tile {
+      background: rgba(10,12,15,0.6);
+      border: 1px solid rgba(244,240,232,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    
+    .poster-tile:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+    }
+    
+    .pt-preview {
+      width: 100%;
+      height: 300px;
+      background: #e0e0e0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .pt-details {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .pt-title {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      color: var(--paper);
+      margin-bottom: 20px;
+      text-transform: capitalize;
+    }
+    
+    .btn-view {
+      margin-top: auto;
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      border-radius: 4px;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    
+    .btn-view:hover {
+      background: var(--accent);
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -70,6 +144,109 @@
         <div class="shf-item">
           <h3>Digital Native</h3>
           <p>Optimized digital assets perfect for corporate screensavers, intranet banners, or internal company chat channels.</p>
+        </div>
+      </div>
+
+      <!-- Portfolio Gallery -->
+      <div class="poster-gallery">
+        <div class="sh-label" style="margin-bottom: 16px;">Portfolio Items</div>
+        <h3 style="font-family: var(--font-display); font-size: 40px; color: var(--paper); margin-bottom: 16px;">Infosec Content</h3>
+        
+        <div class="pg-grid">
+          <!-- Tile 1 -->
+          <div class="poster-tile">
+            <div class="pt-preview">
+              <embed src="assets/posters/Colorwheel.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" width="100%" height="100%" style="object-fit: cover;" />
+            </div>
+            <div class="pt-details">
+              <h4 class="pt-title">Colorwheel</h4>
+              <a href="assets/posters/Colorwheel.pdf" target="_blank" class="btn-view">View Poster</a>
+            </div>
+          </div>
+          
+          <!-- Tile 2 -->
+          <div class="poster-tile">
+            <div class="pt-preview">
+              <embed src="assets/posters/Csawareness.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" width="100%" height="100%" style="object-fit: cover;" />
+            </div>
+            <div class="pt-details">
+              <h4 class="pt-title">Cyber Security Awareness</h4>
+              <a href="assets/posters/Csawareness.pdf" target="_blank" class="btn-view">View Poster</a>
+            </div>
+          </div>
+          
+          <!-- Tile 3 -->
+          <div class="poster-tile">
+            <div class="pt-preview">
+              <embed src="assets/posters/Dataofdeceased.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" width="100%" height="100%" style="object-fit: cover;" />
+            </div>
+            <div class="pt-details">
+              <h4 class="pt-title">Data of Deceased</h4>
+              <a href="assets/posters/Dataofdeceased.pdf" target="_blank" class="btn-view">View Poster</a>
+            </div>
+          </div>
+          
+          <!-- Tile 4 -->
+          <div class="poster-tile">
+            <div class="pt-preview">
+              <embed src="assets/posters/digital%20arrest.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" width="100%" height="100%" style="object-fit: cover;" />
+            </div>
+            <div class="pt-details">
+              <h4 class="pt-title">Digital Arrest</h4>
+              <a href="assets/posters/digital%20arrest.pdf" target="_blank" class="btn-view">View Poster</a>
+            </div>
+          </div>
+      </div>
+
+      <!-- Awareness Posters Gallery -->
+      <div class="poster-gallery" style="margin-top: 60px; padding-top: 60px;">
+        <div class="sh-label" style="margin-bottom: 16px;">Portfolio Items</div>
+        <h3 style="font-family: var(--font-display); font-size: 40px; color: var(--paper); margin-bottom: 16px;">Awareness Posters</h3>
+        
+        <div class="pg-grid">
+          <!-- Tile 1 -->
+          <div class="poster-tile">
+            <div class="pt-preview">
+              <img src="assets/awareness_posters/4.png" alt="Awareness Poster 4" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
+            </div>
+            <div class="pt-details">
+              <h4 class="pt-title">Awareness Poster 4</h4>
+              <a href="assets/awareness_posters/4.png" target="_blank" class="btn-view">View Poster</a>
+            </div>
+          </div>
+          
+          <!-- Tile 2 -->
+          <div class="poster-tile">
+            <div class="pt-preview">
+              <img src="assets/awareness_posters/Passwords.jfif" alt="Passwords" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
+            </div>
+            <div class="pt-details">
+              <h4 class="pt-title">Passwords</h4>
+              <a href="assets/awareness_posters/Passwords.jfif" target="_blank" class="btn-view">View Poster</a>
+            </div>
+          </div>
+          
+          <!-- Tile 3 -->
+          <div class="poster-tile">
+            <div class="pt-preview">
+              <img src="assets/awareness_posters/Social%20Media.jfif" alt="Social Media" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
+            </div>
+            <div class="pt-details">
+              <h4 class="pt-title">Social Media</h4>
+              <a href="assets/awareness_posters/Social%20Media.jfif" target="_blank" class="btn-view">View Poster</a>
+            </div>
+          </div>
+          
+          <!-- Tile 4 -->
+          <div class="poster-tile">
+            <div class="pt-preview">
+              <img src="assets/awareness_posters/UPI.jfif" alt="UPI" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
+            </div>
+            <div class="pt-details">
+              <h4 class="pt-title">UPI</h4>
+              <a href="assets/awareness_posters/UPI.jfif" target="_blank" class="btn-view">View Poster</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
