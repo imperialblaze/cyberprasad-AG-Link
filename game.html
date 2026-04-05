@@ -211,6 +211,29 @@
             80% { text-shadow: 2px 0 var(--neon-blue), -2px 0 red; transform: translate(-1px, -1px); }
             100% { text-shadow: -2px 0 var(--neon-blue), 2px 0 red; }
         }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            #start-screen h1 { font-size: 3rem; }
+            #start-screen p { font-size: 1.2rem; text-align: center; padding: 0 20px; }
+            #player-alias { font-size: 1.2rem; width: 90%; padding: 10px; }
+            
+            #game-container { padding: 15px; width: 96%; }
+            header { flex-direction: column; text-align: center; gap: 10px; padding-bottom: 10px; }
+            h1 { font-size: 1.8rem; }
+            .score-board { font-size: 1.2rem; }
+            
+            #email-display { padding: 15px; margin-bottom: 15px; min-height: unset; word-break: break-word; }
+            .email-header { font-size: 0.95rem; }
+            .email-body { font-size: 1rem; line-height: 1.4; }
+            
+            .controls { flex-direction: column; gap: 10px; }
+            button { padding: 12px 20px; font-size: 1.1rem; width: 100%; }
+            
+            #result-overlay { padding: 20px; }
+            #result-title { font-size: 1.8rem; margin-bottom: 15px; }
+            #result-explanation { font-size: 0.95rem; margin-bottom: 20px; }
+        }
     </style>
 </head>
 <body>
