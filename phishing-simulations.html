@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Phishing simulation templates and training examples by Prasad Sawant, Cybersecurity Awareness Specialist." />
+  <title>Phishing Simulations | Prasad Sawant</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ══════════════════════════════════
+       PHISHING SIMULATIONS PAGE STYLES
+       ══════════════════════════════════ */
+    .phish-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 40px;
+      height: 780px;
+      margin-top: 20px;
+      animation: reveal 0.8s var(--ease-out) forwards;
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ─── SIDEBAR ─── */
+    .phish-sidebar {
+      background: var(--warm);
+      border: 1px solid var(--border-med);
+      border-radius: 8px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 24px rgba(10, 12, 15, 0.04);
+    }
+
+    .phish-sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .phish-sidebar::-webkit-scrollbar-track {
+      background: var(--warm);
+    }
+
+    .phish-sidebar::-webkit-scrollbar-thumb {
+      background: var(--muted-light);
+    }
+
+    .sidebar-header {
+      padding: 24px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border-strong);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .sidebar-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 1px;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .sidebar-subtitle {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .template-item {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.2s, border-left-color 0.2s;
+      border-left: 3px solid transparent;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .template-item:last-child {
+      border-bottom: none;
+    }
+
+    .template-item:hover {
+      background: rgba(200, 64, 26, 0.04);
+    }
+
+    .template-item.active {
+      background: white;
+      border-left-color: var(--accent);
+    }
+
+    .t-eyebrow {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .t-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .t-desc {
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ─── MAC OS WINDOW & OUTLOOK WRAPPER ─── */
+    .phish-main {
+      background: #f3f2f1;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .mac-header {
+      height: 42px;
+      background: linear-gradient(to bottom, #f2f2f2, #e0e0e0);
+      border-bottom: 1px solid #b3b3b3;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      position: relative;
+    }
+
+    .mac-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mac-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .mac-btn.close {
+      background: #ff5f56;
+      border: 1px solid #e0443e;
+    }
+
+    .mac-btn.minimize {
+      background: #ffbd2e;
+      border: 1px solid #dea123;
+    }
+
+    .mac-btn.maximize {
+      background: #27c93f;
+      border: 1px solid #1aab29;
+    }
+
+    .mac-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    /* OUTLOOK RIBBON & TOOLBAR */
+    .outlook-ribbon {
+      background: #0078d4;
+      display: flex;
+      padding: 6px 16px 0 16px;
+    }
+
+    .ol-tab {
+      color: rgba(255, 255, 255, 0.9);
+      padding: 8px 16px;
+      font-size: 13px;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      cursor: pointer;
+    }
+
+    .ol-tab.active {
+      background: #f3f2f1;
+      color: #323130;
+      border-radius: 4px 4px 0 0;
+      font-weight: 600;
+    }
+
+    .outlook-toolbar {
+      background: #f3f2f1;
+      border-bottom: 1px solid #edebe9;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      z-index: 5;
+    }
+
+    .ol-tool {
+      font-size: 13px;
+      color: #323130;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: background 0.1s;
+    }
+
+    .ol-tool:hover {
+      background: #e1dfdd;
+    }
+
+    .ol-icon {
+      font-size: 15px;
+      color: #0078d4;
+      font-weight: bold;
+    }
+
+    .ol-separator {
+      width: 1px;
+      height: 20px;
+      background: #c8c6c4;
+      margin: 0 4px;
+    }
+
+    /* SPOT PHISH BUTTON */
+    .btn-toggle-flags {
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      padding: 8px 20px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: crosshair;
+      border-radius: 3px;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-toggle-flags:hover {
+      background: var(--accent);
+    }
+
+    .btn-toggle-flags:active {
+      transform: scale(0.98);
+    }
+
+    .btn-toggle-flags.active-flags {
+      background: var(--accent);
+    }
+
+    /* READING PANE */
+    .outlook-reading-pane {
+      background: white;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .email-header {
+      padding: 30px 40px 20px 40px;
+      border-bottom: 1px solid #edebe9;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    .er-subject {
+      font-size: 22px;
+      font-weight: 600;
+      color: #242424;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .sender-details {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .sender-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #0078d4;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .er-val.name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #323130;
+      margin-bottom: 2px;
+    }
+
+    .er-val.to {
+      font-size: 13px;
+      color: #605e5c;
+    }
+
+    .er-date {
+      font-size: 13px;
+      color: #605e5c;
+    }
+
+    .email-body {
+      padding: 40px;
+      flex: 1;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    /* ─── RED FLAGS EFFECTS ─── */
+    .red-flag {
+      position: relative;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+
+    .red-flag::after {
+      content: '🚩';
+      position: absolute;
+      top: -12px;
+      right: -18px;
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(10px) scale(0.5);
+      transition: opacity 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .show-flags .red-flag::after {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .show-flags .red-flag {
+      background: rgba(200, 64, 26, 0.15) !important;
+      border-bottom: 2px dashed var(--accent) !important;
+    }
+
+    .red-flag-explainer {
+      display: none;
+      position: absolute;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-body);
+      font-size: 11px;
+      line-height: 1.4;
+      padding: 8px 12px;
+      width: max-content;
+      max-width: 250px;
+      left: 50%;
+      top: 100%;
+      transform: translateX(-50%) translateY(10px);
+      z-index: 20;
+      border-radius: 2px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .red-flag-explainer::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 4px 4px 4px;
+      border-style: solid;
+      border-color: transparent transparent var(--ink) transparent;
+    }
+
+    .show-flags .red-flag:hover .red-flag-explainer {
+      display: block;
+    }
+
+    @media (max-width: 1024px) {
+      .phish-layout {
+        grid-template-columns: 280px 1fr;
+        height: 600px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .phish-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+
+      .phish-sidebar {
+        max-height: 350px;
+      }
+
+      .phish-main {
+        min-height: 500px;
+      }
+
+      .email-body {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Custom Cursor element -->
+  <div id="cur"></div>
+  <div id="cur-r"></div>
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav>
+    <a class="nav-logo" href="index.html">Prasad<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#training">Training</a></li>
+      <li><a href="phishing-simulations.html" class="active">Phishing Simulations</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a class="nav-contact" href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ════════════════ HERO SECTION ════════════════ -->
+  <section style="padding-top: 96px; min-height: 100vh; background: var(--paper);">
+    <div class="s-label">Interactive Sandbox</div>
+    <h1 class="s-title" style="margin-bottom: 24px;">Phishing <br><em>Simulations</em></h1>
+    <p class="s-body" style="max-width: 600px;">
+      Explore real-world phishing templates from my active training campaigns. I design these lures to test specific
+      human vulnerabilities—from authority bias to financial urgency. Use the "Spot the Phish" toggle to reveal the red
+      flags.
+    </p>
+
+    <div class="phish-layout">
+      <!-- SIDEBAR -->
+      <div class="phish-sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-title">Templates</div>
+          <div class="sidebar-subtitle">10 Real-world Lures</div>
+        </div>
+        <div id="template-list">
+          <!-- Templates injected by JS -->
+        </div>
+      </div>
+
+      <!-- MAIN VIEW (MAC OS + OUTLOOK) -->
+      <div class="phish-main" id="main-view">
+
+        <!-- MAC Window Header -->
+        <div class="mac-header">
+          <div class="mac-btns">
+            <div class="mac-btn close"></div>
+            <div class="mac-btn minimize"></div>
+            <div class="mac-btn maximize"></div>
+          </div>
+          <div class="mac-title">Inbox - Microsoft Outlook</div>
+        </div>
+
+        <!-- Outlook Ribbon -->
+        <div class="outlook-ribbon">
+          <div class="ol-tab active">Home</div>
+          <div class="ol-tab">View</div>
+          <div class="ol-tab">Help</div>
+        </div>
+
+        <!-- Outlook Toolbar -->
+        <div class="outlook-toolbar">
+          <div class="ol-tool"><span class="ol-icon">↺</span> Reply</div>
+          <div class="ol-tool"><span class="ol-icon" style="transform: rotateY(180deg); display:inline-block;">↺</span>
+            Forward</div>
+          <div class="ol-separator"></div>
+          <div class="ol-tool">🗑️ Delete</div>
+          <div class="ol-tool">📂 Archive</div>
+          <div class="ol-separator"></div>
+          <div class="ol-tool"><span style="color: #d13438; font-size:16px;">🛑</span> Report Phishing</div>
+
+          <div style="flex: 1;"></div>
+
+          <!-- Spot the Phish Interactive Toggle -->
+          <button class="btn-toggle-flags" id="toggle-flags-btn" onclick="toggleFlags()">SPOT THE PHISH (FLAGS)</button>
+        </div>
+
+        <!-- Outlook Reading Pane -->
+        <div class="outlook-reading-pane">
+          <div class="email-header">
+            <div style="flex: 1;">
+              <div class="er-subject" id="email-subject">Subject</div>
+              <div class="sender-details">
+                <div class="sender-avatar" id="email-avatar">S</div>
+                <div>
+                  <div class="er-val name" id="email-from">Sender</div>
+                  <div class="er-val to" id="email-to">To: employee@company.com</div>
+                </div>
+              </div>
+            </div>
+            <div class="er-date" id="email-date">Date</div>
+          </div>
+
+          <div class="email-body" id="email-body">
+            <!-- Body injected by JS -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ FOOTER ════════════════ -->
+  <footer>
+    <div class="footer-name">Prasad Sawant</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#training">Training</a>
+      <a href="phishing-simulations.html">Simulations</a>
+      <a href="blog.html">Blog</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="footer-copy">© 2025 Prasad Sawant</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // ════════════════ TEMPLATE DATA ════════════════
+    const templates = [
+      {
+        category: "M365 Security",
+        name: "Quarantine Notification",
+        desc: "Simulates Microsoft 365 Exchange quarantine alert",
+        from: "Office 365 Security &lt;<span class='red-flag'>quarantine@microsoft-security-gateway.com<span class='red-flag-explainer'>External domain impersonating Microsoft.</span></span>&gt;",
+        to: "employee@company.com",
+        subject: "Spam Notification: 3 messages in quarantine",
+        date: "Today, 07:15 AM",
+        body: `
+          <div style="font-family: 'Segoe UI', Helvetica, sans-serif; max-width: 600px; border: 1px solid #e1dfdd; border-radius: 4px; padding: 25px; box-sizing: border-box;">
+            <div style="border-bottom: 2px solid #0078d4; padding-bottom: 12px; margin-bottom: 20px;">
+              <h2 style="font-weight: 300; color: #323130; margin: 0; font-size: 24px; display:flex; align-items:center;">
+                <svg width="24" height="24" viewBox="0 0 24 24" style="margin-right:8px;"><path fill="#f35325" d="M1 1h10v10H1z"/><path fill="#81bc06" d="M12 1h10v10H12z"/><path fill="#05a6f0" d="M1 12h10v10H1z"/><path fill="#ffba08" d="M12 12h10v10H12z"/></svg>
+                Microsoft 365
+              </h2>
+            </div>
+            <p style="font-size: 15px; color: #323130;"><strong>Security Policy Notification</strong></p>
+            <p style="font-size: 14px; color: #605e5c; line-height: 1.5;">We have placed <span class="red-flag">3 messages<span class="red-flag-explainer">Generates curiosity and fear of missing important communication.</span></span> in your organization's quarantine folder to prevent suspected spam and malware from reaching your inbox.</p>
+            <div style="background-color: #faf9f8; border-left: 4px solid #0078d4; padding: 15px; margin: 20px 0;">
+              <p style="margin: 0; font-size: 14px;"><strong>Pending Messages:</strong></p>
+              <ul style="margin: 10px 0 0 15px; font-size: 13px; color: #605e5c; line-height: 1.6;">
+                <li>HR - Q4 Bonus Payout Finalization</li>
+                <li>IT - Domain Password Expiry Notice</li>
+                <li>Admin - Undelivered Mail Returned to Sender</li>
+              </ul>
+            </div>
+            <p style="font-size: 14px; color: #605e5c;">Action is required. Messages will be permanently deleted in 48 hours.</p>
+            <a href="https://login.microsoftonline.verify-secure-update.com/login.php" target="_blank" class="red-flag" style="display:inline-block; background: #0078d4; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 2px; font-size: 14px; margin-top: 15px; font-weight: 600;">Review Quarantine Messages<span class="red-flag-explainer">Fake link to harvest M365 credentials.</span></a>
+          </div>
+        `
+      },
+      {
+        category: "Microsoft Teams",
+        name: "Offline Message from HR",
+        desc: "Simulates an unread Microsoft Teams notification",
+        from: "Microsoft Teams &lt;<span class='red-flag'>noreply@teams-offline-alerts.com<span class='red-flag-explainer'>Lookalike domain impersonating Microsoft Teams.</span></span>&gt;",
+        to: "employee@company.com",
+        subject: "Sarah Jenkins sent you a message in Teams",
+        date: "Today, 09:42 AM",
+        body: `
+          <div style="font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 600px; border: 1px solid #edebe9; border-radius: 6px; padding: 0; overflow: hidden;">
+            <div style="background: #4F52B2; color: white; padding: 16px 24px; display: flex; align-items: center;">
+              <div style="background:#fff; color:#4F52B2; width:26px; height:26px; border-radius:4px; display:inline-flex; align-items:center; justify-content:center; font-weight:bold; font-family:sans-serif; margin-right:12px;">T</div>
+              <div style="font-weight: 600; font-size: 16px;">Microsoft Teams</div>
+            </div>
+            <div style="padding: 30px;">
+              <h2 style="font-weight: 300; font-size: 24px; color: #242424; margin-top: 0; margin-bottom: 25px;"><span class="red-flag">Sarah Jenkins<span class="red-flag-explainer">Spoofing a known colleague/HR to build absolute trust.</span></span> sent you a message in Teams</h2>
+              <div style="border-left: 4px solid #edebe9; padding-left: 15px; margin: 20px 0;">
+                <p style="color: #242424; font-size: 15px; font-weight: 600; margin-bottom: 5px;">Sarah Jenkins (HR Director)</p>
+                <p style="color: #605e5c; font-size: 14px; margin-top: 0; line-height: 1.5;">Hi, I tried reaching out earlier today. Could you please review the attached Q4 restructuring adjustments immediately?</p>
+              </div>
+              <a href="https://teams-invite-secure.com/auth" target="_blank" class="red-flag" style="display: inline-block; background: #4F52B2; color: white; padding: 12px 28px; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 600; margin-top: 10px;">Reply in Teams<span class="red-flag-explainer">Link bypasses the local Teams app and redirects to a fake login site.</span></a>
+            </div>
+          </div>
+        `
+      },
+      {
+        category: "SharePoint",
+        name: "Financial Report Shared",
+        desc: "A realistic SharePoint document sharing invite",
+        from: "SharePoint Online &lt;<span class='red-flag'>no-reply@sharepoint-document-secure.net<span class='red-flag-explainer'>Legitimate SharePoint invites come from valid corporate domains or valid Microsoft IPs, not .net domains.</span></span>&gt;",
+        to: "employee@company.com",
+        subject: "David sent you Salary_Bands_2026_Final.xlsx",
+        date: "Yesterday, 04:32 PM",
+        body: `
+          <div style="font-family: 'Segoe UI', sans-serif; max-width: 550px; border: 1px solid #e1dfdd; border-radius: 4px; box-sizing: border-box;">
+            <div style="padding: 15px 20px; border-bottom: 1px solid #e1dfdd; display: flex; align-items: center;">
+              <div style="background:#0078D4; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:bold; font-size:12px; margin-right:8px;">S</div>
+              <span style="font-size: 16px; color: #0078d4; font-weight: 600;">SharePoint Online</span>
+            </div>
+            <div style="padding: 30px;">
+              <h3 style="font-weight: 300; font-size: 22px; color: #323130; margin-top: 0;">David Chen shared a file with you</h3>
+              <p style="font-size: 14px; color: #605e5c; margin-bottom: 20px;">"Please review the final adjustments before our meeting."</p>
+              <div style="display: flex; gap: 18px; align-items: center; background: #faf9f8; padding: 20px; border: 1px solid #edebe9; margin: 20px 0; border-radius: 4px;">
+                <div style="background:#107c41; color:#fff; width:36px; height:36px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:20px;">X</div>
+                <div>
+                  <div style="font-size: 15px; color: #323130; font-weight: 600;"><span class="red-flag">Salary_Bands_2026_Final.xlsx<span class="red-flag-explainer">Highly enticing filename designed to trigger curiosity.</span></span></div>
+                  <div style="font-size: 13px; color: #605e5c; margin-top: 4px;">Microsoft Excel Document</div>
+                </div>
+              </div>
+              <a href="https://company-sharepoint.secure-doc-auth.com/login" target="_blank" class="red-flag" style="display: inline-block; background: #0078d4; color: white; padding: 10px 24px; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 2px;">Open Document<span class="red-flag-explainer">The link doesn't point to company.sharepoint.com, but an external phishing site.</span></a>
+            </div>
+          </div>
+        `
+      },
+      {
+        category: "MFA Alert",
+        name: "New Device Registered",
+        desc: "Microsoft Authenticator / MFA security alert",
+        from: "Microsoft Security team &lt;<span class='red-flag'>account-protection@ms-auth-alerts.com<span class='red-flag-explainer'>Fake domain. Real alerts come from accountprotection.microsoft.com.</span></span>&gt;",
+        to: "employee@company.com",
+        subject: "Security Alert: New device verification added",
+        date: "Today, 11:42 AM",
+        body: `
+          <div style="font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 550px; border: 1px solid #edebe9; box-sizing: border-box;">
+            <div style="padding: 30px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" style="margin-bottom:20px;"><path fill="#f35325" d="M1 1h10v10H1z"/><path fill="#81bc06" d="M12 1h10v10H12z"/><path fill="#05a6f0" d="M1 12h10v10H1z"/><path fill="#ffba08" d="M12 12h10v10H12z"/></svg>
+              <h2 style="font-weight: 300; font-size: 26px; color: #323130; margin: 0 0 20px 0;">New device verification added</h2>
+              <p style="font-size: 15px; color: #323130;">Hi,</p>
+              <p style="font-size: 14px; color: #323130; line-height: 1.5;">A new device was successfully registered for multi-factor authentication (MFA) on your account.</p>
+              <p style="font-size: 14px; color: #605e5c; line-height: 1.6; margin: 20px 0;">
+                <strong>Device:</strong> <span class="red-flag">Apple iPhone 15 Pro<span class="red-flag-explainer">Creates panic if the user doesn't own this device.</span></span><br>
+                <strong>Location:</strong> Moscow, RU<br>
+                <strong>Time:</strong> Today, 11:42 AM
+              </p>
+              <div style="background-color: #fff4ce; border-left: 4px solid #f2c811; padding: 15px; margin: 25px 0; font-size: 14px; color: #323130;">
+                If you did not authorize this change, please report it immediately to secure your account.
+              </div>
+              <a href="https://account-protection.ms-auth-alerts.com/report" target="_blank" class="red-flag" style="display: inline-block; background: #0078d4; color: white; padding: 10px 24px; text-decoration: none; font-size: 14px; border-radius: 2px; font-weight: 600;">Report Fraud & Block Device<span class="red-flag-explainer">Tricks the user into providing credentials "to stop the fraud".</span></a>
+            </div>
+          </div>
+        `
+      },
+      {
+        category: "Cloud Storage",
+        name: "OneDrive Storage Full",
+        desc: "Urgency tactic over cloud storage capacity limit",
+        from: "OneDrive &lt;onedrive@company.com&gt;",
+        to: "employee@company.com",
+        subject: "Warning: Your OneDrive is almost full",
+        date: "Oct 12, 08:30 AM",
+        body: `
+          <div style="font-family: 'Segoe UI', sans-serif; max-width: 500px; padding: 25px; border: 1px solid #edebe9; box-sizing: border-box;">
+            <div style="color:#0078D4; font-size:32px; margin-bottom:15px; line-height:1;">☁️</div>
+            <h2 style="font-weight: 300; font-size: 28px; color: #323130; margin: 0 0 15px 0;">Your OneDrive is almost full</h2>
+            <p style="font-size: 15px; color: #605e5c; line-height: 1.5;">You have used <span class="red-flag">98%<span class="red-flag-explainer">Urgency tactic: threatening loss of ability to work.</span></span> of your allocated cloud storage space.</p>
+            
+            <div style="width: 100%; background: #edebe9; height: 10px; border-radius: 5px; margin: 25px 0; overflow: hidden;">
+              <div style="width: 98%; background: #d13438; height: 100%;"></div>
+            </div>
+            
+            <p style="font-size: 14px; color: #605e5c; margin-bottom: 30px; line-height: 1.5;">Once you reach your limit, you will not be able to upload files to OneDrive or send/receive emails via Outlook.</p>
+            <a href="https://it-support.onedrive-storage-upgrade.net/login" target="_blank" class="red-flag" style="display: inline-block; background: #0078d4; color: white; padding: 12px 28px; text-decoration: none; font-size: 14px; border-radius: 2px; font-weight: 600;">Request Additional Storage<span class="red-flag-explainer">Harvests credentials under the guise of an IT storage upgrade request.</span></a>
+          </div>
+        `
+      },
+      {
+        category: "E-Signature",
+        name: "DocuSign: Policy Review",
+        desc: "DocuSign clone for a mandatory policy signature",
+        from: "DocuSign System &lt;<span class='red-flag'>dse@docusign-secure-envelope.net<span class='red-flag-explainer'>Legitimate DocuSign emails come from @docusign.net or @docusign.com</span></span>&gt;",
+        to: "employee@company.com",
+        subject: "Please sign document: Employee Policy 2026",
+        date: "Yesterday, 02:15 PM",
+        body: `
+          <div style="font-family: Helvetica, Arial, sans-serif; max-width: 600px; background: #f4f4f4; padding: 30px; box-sizing: border-box;">
+            <div style="background: white; border-top: 4px solid #254b8a; padding: 35px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+              <div style="font-weight:900; font-size:26px; color:#000; letter-spacing:-1px; margin-bottom:25px;">DocuSign</div>
+              <p style="font-size: 18px; color: #333; margin-top: 0;"><strong><span class="red-flag">Human Resources<span class="red-flag-explainer">Spoofed internal department name using an external email service.</span></span></strong> sent you a document to review and sign.</p>
+              <h3 style="font-size: 24px; font-weight: 300; color: #333; margin: 25px 0;">2026 Updated Remote Work Policy.pdf</h3>
+              <a href="http://docusign-secure-envelope.net/sign/2026-policy" target="_blank" class="red-flag" style="display: inline-block; background: #ffc820; color: #333; text-decoration: none; padding: 15px 45px; font-weight: bold; font-size: 15px; margin-bottom: 25px; border-radius: 3px;">REVIEW DOCUMENT<span class="red-flag-explainer">Leads to a fake DocuSign login page to steal credentials.</span></a>
+              <div style="font-size: 13px; color: #666; text-align: left; background: #f9f9f9; padding: 18px; border-left: 3px solid #ccc; line-height: 1.5;">
+                <strong>Please note:</strong> This document requires your signature by end of day Friday. Compliance is mandatory for all employees.
+              </div>
+            </div>
+            <p style="text-align: center; font-size: 11px; color: #999; margin-top: 20px;">Powered by DocuSign</p>
+          </div>
+        `
+      },
+      {
+        category: "HR Portal",
+        name: "Workday: Action Needed",
+        desc: "Workday notification about direct deposit changes",
+        from: "Workday &lt;<span class='red-flag'>system@workday-employee-portal.com<span class='red-flag-explainer'>Typical lookalike domain used in business email compromise.</span></span>&gt;",
+        to: "employee@company.com",
+        subject: "Action Needed: Update to Direct Deposit Details",
+        date: "Today, 09:00 AM",
+        body: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; padding: 25px; border: 1px solid #e1dfdd; border-top: 5px solid #005A9c; box-sizing: border-box;">
+            <div style="font-weight:bold; font-size:26px; color:#005CB9; font-style:italic; margin-bottom:20px; letter-spacing:-1px;">workday.</div>
+            <p style="font-size: 15px; color: #333; font-weight: bold;">Workday Notification</p>
+            <p style="font-size: 15px; color: #333; line-height: 1.5;">A request to update your <span class="red-flag">direct deposit banking detailed<span class="red-flag-explainer">Exploits financial fear. If someone else changes your deposit info, you lose your paycheck.</span></span> was initiated.</p>
+            <p style="font-size: 14px; color: #666; background: #f9f9f9; padding: 15px; border-radius: 4px; border: 1px solid #eee;">
+              <strong>Effective Date:</strong> Next Pay Cycle<br>
+              <strong>Status:</strong> Pending Employee Approval
+            </p>
+            <p style="font-size: 15px; color: #333; margin: 25px 0 15px 0;">If you did not initiate this change, access Workday immediately to reject the request.</p>
+            <a href="https://workday-employee-portal.com/login" target="_blank" class="red-flag" style="display: inline-block; background: #005A9c; color: white; padding: 12px 24px; text-decoration: none; border-radius: 24px; font-size: 14px; font-weight: bold;">Log in to Workday<span class="red-flag-explainer">Steals HRIS/Workday portal login credentials.</span></a>
+          </div>
+        `
+      },
+      {
+        category: "Business Comm",
+        name: "Zoom: Missed Meeting Info",
+        desc: "Corporate-styled missed meeting with a malicious recording link",
+        from: "Zoom &lt;no-reply@zoom-recording-cloud.com&gt;",
+        to: "employee@company.com",
+        subject: "Meeting Recording Available: Strategy Sync",
+        date: "Today, 01:20 PM",
+        body: `
+          <div style="font-family: Arial, sans-serif; color: #333; max-width: 550px; border: 1px solid #eaeaea; box-sizing: border-box;">
+            <div style="background: #2D8CFF; padding: 20px; display: flex; align-items: center;">
+              <div style="font-weight:bold; font-size:28px; color:#fff; letter-spacing:-1px;">zoom</div>
+            </div>
+            <div style="padding: 30px;">
+              <p style="font-size: 15px;">Your cloud recording is now available.</p>
+              <div style="padding: 20px; border-left: 4px solid #2D8CFF; background: #f4f5f9; margin: 20px 0;">
+                <p style="margin: 0 0 10px 0;"><strong>Topic:</strong> <span class="red-flag">Q4 Confidential Strategy Sync<span class="red-flag-explainer">Vague but highly important-sounding topic to invoke curiosity/FOMO.</span></span></p>
+                <p style="margin: 0 0 10px 0;"><strong>Host:</strong> Executive Team</p>
+                <p style="margin: 0;"><strong>Date:</strong> Today</p>
+              </div>
+              <p style="margin-bottom: 20px; font-size: 14px;">View the recording or review the auto-generated transcript:</p>
+              <a href="https://zoom-recording-cloud.com/view/Q4-Sync" target="_blank" class="red-flag" style="display: inline-block; background: #2D8CFF; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">Play Recording<span class="red-flag-explainer">Link directs to an O365 login prompt asking for credentials "to view the video".</span></a>
+              <p style="font-size: 12px; color: #888; margin-top: 30px; border-top: 1px solid #eaeaea; padding-top: 20px;">Note: This link requires you to authenticate with your corporate Microsoft 365 credentials.</p>
+            </div>
+          </div>
+        `
+      },
+      {
+        category: "LinkedIn",
+        name: "Profile Views Alert",
+        desc: "Classic social engineering targeting curiosity",
+        from: "LinkedIn &lt;<span class='red-flag'>messages-noreply@linkedin-network-update.com<span class='red-flag-explainer'>Fake LinkedIn domain structure. Real ones use linkedin.com.</span></span>&gt;",
+        to: "employee@company.com",
+        subject: "You're getting noticed",
+        date: "Yesterday, 06:12 PM",
+        body: `
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 550px; background: #f3f2ef; padding: 30px; box-sizing: border-box;">
+            <div style="background: white; border-radius: 8px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: center;">
+              <div style="margin-bottom: 20px; display:inline-flex; align-items:center;">
+                <div style="background:#0a66c2; color:#fff; font-weight:bold; font-size:22px; padding:2px 6px; border-radius:4px; margin-right:6px;">in</div>
+                <div style="font-size:24px; font-weight:bold; color:#0a66c2; letter-spacing:-1px;">LinkedIn</div>
+              </div>
+              <h2 style="font-size: 22px; color: #000000; font-weight: 500; margin-top: 0;">You're getting noticed</h2>
+              <p style="font-size: 15px; color: #666666; margin-bottom: 25px; line-height: 1.5;">You appeared in <span class="red-flag">18 searches<span class="red-flag-explainer">Ego/Curiosity lure. Very common for LinkedIn phishing.</span></span> this week. People from companies like <strong>Google</strong> and <strong>Amazon</strong> are looking at your profile.</p>
+              <a href="https://linkedin-network-update.com/login" target="_blank" class="red-flag" style="display: inline-block; background: #0a66c2; color: white; padding: 14px 30px; text-decoration: none; border-radius: 24px; font-weight: 600; font-size: 16px;">See all searches<span class="red-flag-explainer">Not a real LinkedIn link. Redirects to a credential harvesting site.</span></a>
+              <p style="font-size: 12px; color: #8F8F8F; margin-top: 35px;">Unsubscribe | Help | LinkedIn Corporation, 1000 W Maude Ave, Sunnyvale, CA 94085</p>
+            </div>
+          </div>
+        `
+      },
+      {
+        category: "Urgent/Finance",
+        name: "Bank: Suspicious Transfer",
+        desc: "High-stress wire transfer cancellation alert",
+        from: "Chase Security &lt;alerts@chase-secure-verify.com&gt;",
+        to: "employee@company.com",
+        subject: "URGENT: Suspicious wire transfer detected",
+        date: "Yesterday, 05:44 PM",
+        body: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; border: 1px solid #ccc; box-sizing: border-box;">
+            <div style="background: #117aca; padding: 20px; color: white; display: flex; align-items: center; justify-content: space-between;">
+              <h2 style="margin: 0; font-size: 20px;">Fraud Prevention Alert</h2>
+              <div style="border:4px solid #fff; border-radius:3px; padding:2px; font-weight:900; letter-spacing:1px; background:#117aca; color:#fff;">CHASE</div>
+            </div>
+            <div style="padding: 30px;">
+              <p style="font-size: 15px; margin-top: 0;">Dear Customer,</p>
+              <p style="font-size: 15px; line-height: 1.5;">We detected a domestic wire transfer of <span class="red-flag">$4,850.00<span class="red-flag-explainer">A large, alarming dollar amount.</span></span> initiated from your checking account.</p>
+              <p style="font-size: 15px;">If you authorized this transaction, no further action is required.</p>
+              <p style="font-size: 15px; line-height: 1.5;">If you <strong>DID NOT</strong> authorize this transfer, you must cancel it immediately via our fraud prevention center:</p>
+              <div style="margin: 25px 0;">
+                <a href="https://chase-secure-verify.com/fraud-center" target="_blank" class="red-flag" style="display: inline-block; background: #117aca; color: white; font-weight: bold; text-decoration: none; padding: 12px 24px; border-radius: 4px;">Cancel Unauthorized Transfer<span class="red-flag-explainer">Banking trojan download or credential intercept page.</span></a>
+              </div>
+              <p style="font-size: 14px; color: #d13438; font-weight: bold;">Failure to respond within <span class="red-flag">24 hours<span class="red-flag-explainer">Extremely tight timeframe to induce panic.</span></span> will result in the funds being permanently cleared.</p>
+              <p style="font-size: 14px; color: #666; margin-top: 30px;">Thank you,<br>Fraud Prevention Department</p>
+            </div>
+          </div>
+        `
+      }
+    ];
+
+    // ════════════════ STATE & LOGIC ════════════════
+    let currentTemplateIdx = 0;
+    let flagsVisible = false;
+
+    const listEl = document.getElementById('template-list');
+    const toggleBtn = document.getElementById('toggle-flags-btn');
+    const bodyEl = document.getElementById('email-body');
+
+    function renderList() {
+      listEl.innerHTML = '';
+      templates.forEach((t, idx) => {
+        const div = document.createElement('div');
+        div.className = 'template-item' + (idx === currentTemplateIdx ? ' active' : '');
+        div.onclick = () => selectTemplate(idx);
+
+        div.innerHTML = `
+          <div class="t-eyebrow">${t.category}</div>
+          <div class="t-name">${t.name}</div>
+          <div class="t-desc">${t.desc}</div>
+        `;
+        listEl.appendChild(div);
+      });
+    }
+
+    function selectTemplate(idx) {
+      currentTemplateIdx = idx;
+
+      // Auto-hide flags when switching to let user try again
+      if (flagsVisible) toggleFlags();
+
+      const t = templates[idx];
+      document.getElementById('email-from').innerHTML = t.from;
+      document.getElementById('email-to').innerText = `To: ${t.to}`;
+      document.getElementById('email-date').innerText = t.date;
+      document.getElementById('email-subject').innerText = t.subject;
+      bodyEl.innerHTML = t.body;
+
+      // Gen avatar initials
+      const plainTextFrom = t.from.replace(/<[^>]*>/g, '').trim();
+      let init = plainTextFrom ? plainTextFrom.charAt(0).toUpperCase() : '👤';
+      document.getElementById('email-avatar').innerText = init;
+
+      // Update sidebar visual state
+      const items = listEl.querySelectorAll('.template-item');
+      items.forEach(el => el.classList.remove('active'));
+      items[idx].classList.add('active');
+    }
+
+    function toggleFlags() {
+      flagsVisible = !flagsVisible;
+      if (flagsVisible) {
+        bodyEl.classList.add('show-flags');
+        toggleBtn.classList.add('active-flags');
+        toggleBtn.innerText = 'HIDE RED FLAGS';
+      } else {
+        bodyEl.classList.remove('show-flags');
+        toggleBtn.classList.remove('active-flags');
+        toggleBtn.innerText = 'SPOT THE PHISH (FLAGS)';
+      }
+    }
+
+    // Init
+    renderList();
+    selectTemplate(0);
+
+  </script>
+</body>
+
+</html>
