@@ -77,6 +77,42 @@
       position: relative;
       overflow: hidden;
     }
+    .pt-preview-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: top;
+      filter: blur(8px) saturate(1.8) brightness(0.8);
+      transform: scale(1.15);
+      transition: all 0.5s ease;
+    }
+    .pt-preview-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(10,12,15,0.85), rgba(200,64,26,0.6));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      z-index: 1;
+    }
+    .poster-tile:hover .pt-preview-bg {
+      transform: scale(1.25);
+      filter: blur(4px) saturate(2);
+    }
+    .pt-typo {
+      color: white;
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+      line-height: 1.2;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.6);
+      position: relative;
+      z-index: 2;
+    }
     
     .pt-details {
       padding: 24px;
@@ -114,14 +150,37 @@
       color: white;
     }
   </style>
+  <!-- SEO & AI Meta Tags -->
+  <meta name="author" content="Prasad Sawant" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta property="og:title" content="Prasad Sawant | Cybersecurity Awareness Specialist" />
+  <meta property="og:description" content="Building security cultures through immersive learning, phishing simulations, and human-risk programs. Over 25,000 professionals trained." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="heroimagetedx1.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Prasad Sawant | Cybersecurity" />
+  <meta name="twitter:description" content="Cybersecurity awareness specialist designing immersive learning and phishing simulations." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Prasad Sawant",
+    "jobTitle": "Cybersecurity Awareness Specialist",
+    "description": "Building security cultures through immersive learning, phishing simulations, and human-risk programs.",
+    "knowsAbout": ["Cybersecurity Awareness", "Phishing Simulations", "Instructional Design", "Gamification", "Human Risk Management"],
+    "sameAs": [
+      "https://www.linkedin.com/in/prasaddsawant/"
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="cur"></div><div id="cur-r"></div>
-  <nav>
+    <nav>
     <a class="nav-logo" href="index.html">Prasad<span class="dot">.</span></a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="index.html#work" class="active">Work</a></li>
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#work">Work</a></li>
       <li><a href="index.html#training">Training</a></li>
       <li><a href="phishing-simulations.html">Phishing Simulations</a></li>
       <li><a href="blog.html">Blog</a></li>
@@ -135,68 +194,59 @@
       <div class="sh-label">Service Offering</div>
       <h1 class="sh-title">Security Posters</h1>
       <p class="sh-desc">Campaign-grade visual assets that reinforce secure behaviour across physical and digital workspaces. Designed for maximum recall and cross-cultural adaptability.</p>
-      <a class="btn btn-red" href="index.html#contact">Discuss a Project &rarr;</a>
       
-      <div class="sh-features">
-        <div class="shf-item">
-          <h3>Print-Ready</h3>
-          <p>High-fidelity graphics prepared meticulously for CMYK print, scaling beautifully to any physical space or bulletin board.</p>
-        </div>
-        <div class="shf-item">
-          <h3>Digital Native</h3>
-          <p>Optimized digital assets perfect for corporate screensavers, intranet banners, or internal company chat channels.</p>
-        </div>
-      </div>
 
-      <!-- Portfolio Gallery -->
+      <!-- Pop Culture Posters Gallery -->
       <div class="poster-gallery">
-        <div class="sh-label" style="margin-bottom: 16px;">Portfolio Items</div>
-        <h3 style="font-family: var(--font-display); font-size: 40px; color: var(--paper); margin-bottom: 16px;">Infosec Content</h3>
+        <div class="sh-label" style="margin-bottom: 16px;">Pop Culture Infosec</div>
+        <h3 style="font-family: var(--font-display); font-size: 40px; color: var(--paper); margin-bottom: 16px;">The "Friends" Edition</h3>
+        <p style="font-size: 14px; color: rgba(244,240,232,0.6); max-width: 600px; line-height: 1.8; margin-bottom: 40px;">Could these security posters BE any more awesome? Pivot your workplace awareness strategy with these sitcom-inspired designs that employees will actually want to look at.</p>
         
         <div class="pg-grid">
           <!-- Tile 1 -->
           <div class="poster-tile">
             <div class="pt-preview">
-              <img src="assets/posters/Colorwheel.png" alt="Colorwheel Poster Thumbnail" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
+              <img src="assets/posters/Friends/Be%20like%20monica.png" alt="Be Like Monica" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
             </div>
             <div class="pt-details">
-              <h4 class="pt-title">Colorwheel</h4>
-              <a href="assets/posters/Colorwheel.pdf" target="_blank" class="btn-view">View Poster</a>
+              <h4 class="pt-title">Be Like Monica</h4>
+              <a href="assets/posters/Friends/Be%20like%20monica.png" target="_blank" class="btn-view">View Poster</a>
             </div>
           </div>
           
           <!-- Tile 2 -->
           <div class="poster-tile">
             <div class="pt-preview">
-              <img src="assets/posters/Csawareness.png" alt="Cyber Security Awareness Poster Thumbnail" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
+              <img src="assets/posters/Friends/How%20you%20doin.png" alt="How You Doin" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
             </div>
             <div class="pt-details">
-              <h4 class="pt-title">Cyber Security Awareness</h4>
-              <a href="assets/posters/Csawareness.pdf" target="_blank" class="btn-view">View Poster</a>
+              <h4 class="pt-title">How You Doin</h4>
+              <a href="assets/posters/Friends/How%20you%20doin.png" target="_blank" class="btn-view">View Poster</a>
             </div>
           </div>
           
           <!-- Tile 3 -->
           <div class="poster-tile">
             <div class="pt-preview">
-              <img src="assets/posters/Dataofdeceased.png" alt="Data of Deceased Poster Thumbnail" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
+              <img src="assets/posters/Friends/Smelly%20Cat.png" alt="Smelly Cat" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
             </div>
             <div class="pt-details">
-              <h4 class="pt-title">Data of Deceased</h4>
-              <a href="assets/posters/Dataofdeceased.pdf" target="_blank" class="btn-view">View Poster</a>
+              <h4 class="pt-title">Smelly Cat</h4>
+              <a href="assets/posters/Friends/Smelly%20Cat.png" target="_blank" class="btn-view">View Poster</a>
             </div>
           </div>
           
           <!-- Tile 4 -->
           <div class="poster-tile">
             <div class="pt-preview">
-              <img src="assets/posters/digital_arrest.png" alt="Digital Arrest Poster Thumbnail" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
+              <img src="assets/posters/Friends/We%20were%20on%20a%20break.png" alt="We Were On A Break" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
             </div>
             <div class="pt-details">
-              <h4 class="pt-title">Digital Arrest</h4>
-              <a href="assets/posters/digital%20arrest.pdf" target="_blank" class="btn-view">View Poster</a>
+              <h4 class="pt-title">We Were On A Break</h4>
+              <a href="assets/posters/Friends/We%20were%20on%20a%20break.png" target="_blank" class="btn-view">View Poster</a>
             </div>
           </div>
+        </div>
       </div>
 
       <!-- Awareness Posters Gallery -->
@@ -246,6 +296,70 @@
             <div class="pt-details">
               <h4 class="pt-title">UPI</h4>
               <a href="assets/awareness_posters/UPI.jfif" target="_blank" class="btn-view">View Poster</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portfolio Gallery (Carousel) -->
+      <div class="poster-gallery" style="margin-top: 60px; padding-top: 60px;">
+        <div class="sh-label" style="margin-bottom: 16px;">Portfolio Items</div>
+        <h3 style="font-family: var(--font-display); font-size: 40px; color: var(--paper); margin-bottom: 16px;">Carousel</h3>
+        
+        <div class="pg-grid">
+          <!-- Tile 1 -->
+          <div class="poster-tile">
+            <div class="pt-preview">
+              <div class="pt-preview-bg" style="background-image: url('assets/posters/Colorwheel.png');"></div>
+              <div class="pt-preview-overlay">
+                <div class="pt-typo">Colorwheel</div>
+              </div>
+            </div>
+            <div class="pt-details">
+              <h4 class="pt-title">Colorwheel</h4>
+              <a href="assets/posters/Colorwheel.pdf" target="_blank" class="btn-view">View Poster</a>
+            </div>
+          </div>
+          
+          <!-- Tile 2 -->
+          <div class="poster-tile">
+            <div class="pt-preview">
+              <div class="pt-preview-bg" style="background-image: url('assets/posters/Csawareness.png');"></div>
+              <div class="pt-preview-overlay">
+                <div class="pt-typo">Cyber Awareness vs AI</div>
+              </div>
+            </div>
+            <div class="pt-details">
+              <h4 class="pt-title">Cyber Awareness vs AI</h4>
+              <a href="assets/posters/Csawareness.pdf" target="_blank" class="btn-view">View Poster</a>
+            </div>
+          </div>
+          
+          <!-- Tile 3 -->
+          <div class="poster-tile">
+            <div class="pt-preview">
+              <div class="pt-preview-bg" style="background-image: url('assets/posters/Dataofdeceased.png');"></div>
+              <div class="pt-preview-overlay">
+                <div class="pt-typo">Data of Deceased</div>
+              </div>
+            </div>
+            <div class="pt-details">
+              <h4 class="pt-title">Data of Deceased</h4>
+              <a href="assets/posters/Dataofdeceased.pdf" target="_blank" class="btn-view">View Poster</a>
+            </div>
+          </div>
+          
+          <!-- Tile 4 -->
+          <div class="poster-tile">
+            <div class="pt-preview">
+              <div class="pt-preview-bg" style="background-image: url('assets/posters/digital_arrest.png');"></div>
+              <div class="pt-preview-overlay">
+                <div class="pt-typo">Digital Arrest</div>
+              </div>
+            </div>
+            <div class="pt-details">
+              <h4 class="pt-title">Digital Arrest</h4>
+              <a href="assets/posters/digital%20arrest.pdf" target="_blank" class="btn-view">View Poster</a>
             </div>
           </div>
         </div>

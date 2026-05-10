@@ -40,49 +40,141 @@
     .shf-item p { font-size: 12px; color: rgba(244,240,232,0.45); line-height: 1.7; }
     footer { background: #060809; }
     
-    .game-thumbnail {
-      position: relative; 
-      width: 100%; 
-      height: 75vh;
-      min-height: 480px;
-      max-height: 750px;
-      background: #060809; 
-      border: 1px solid rgba(200,64,26,0.3); 
-      border-radius: 8px; 
-      overflow: hidden; 
-      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 32px;
+      margin-top: 60px;
+      padding-top: 60px;
+      border-top: 1px solid rgba(244,240,232,0.1);
+      width: 100%;
+      max-width: 1200px;
+      position: relative;
+      z-index: 10;
     }
     
-    @media (max-width: 768px) {
-      .game-thumbnail {
-        height: 60vh;
-        min-height: 400px;
-      }
-      .game-showcase-header {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 16px !important;
-      }
-      .game-showcase-header .sh-label {
-        margin-bottom: 8px !important;
-      }
-      .game-showcase-header h3 {
-        font-size: 24px !important;
-        margin-bottom: 8px !important;
-      }
-      .game-showcase-header p {
-        font-size: 13px !important;
-      }
+    .game-tile {
+      background: rgba(10, 12, 15, 0.8);
+      border: 1px solid rgba(244,240,232,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .game-tile:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      border-color: var(--accent);
+    }
+    
+    .game-tile-img {
+      width: 100%;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(244,240,232,0.1);
+    }
+    
+    .game-tile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .game-tile:hover .game-tile-img img {
+      transform: scale(1.08);
+    }
+    
+    .game-tile-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    
+    .gt-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(244,240,232,0.5);
+      margin-bottom: 8px;
+      transition: color 0.3s ease;
+    }
+    
+    .game-tile:hover .gt-label {
+      color: var(--accent);
+    }
+    
+    .gt-title {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      color: var(--paper);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    
+    .gt-desc {
+      font-size: 13px;
+      color: rgba(244,240,232,0.6);
+      line-height: 1.6;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+    
+    .gt-play {
+      align-self: flex-start;
+      padding: 8px 20px;
+      background: transparent;
+      border: 1px solid rgba(244,240,232,0.2);
+      color: var(--paper);
+      border-radius: 4px;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+    
+    .game-tile:hover .gt-play {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
     }
   </style>
+  <!-- SEO & AI Meta Tags -->
+  <meta name="author" content="Prasad Sawant" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta property="og:title" content="Prasad Sawant | Cybersecurity Awareness Specialist" />
+  <meta property="og:description" content="Building security cultures through immersive learning, phishing simulations, and human-risk programs. Over 25,000 professionals trained." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="heroimagetedx1.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Prasad Sawant | Cybersecurity" />
+  <meta name="twitter:description" content="Cybersecurity awareness specialist designing immersive learning and phishing simulations." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Prasad Sawant",
+    "jobTitle": "Cybersecurity Awareness Specialist",
+    "description": "Building security cultures through immersive learning, phishing simulations, and human-risk programs.",
+    "knowsAbout": ["Cybersecurity Awareness", "Phishing Simulations", "Instructional Design", "Gamification", "Human Risk Management"],
+    "sameAs": [
+      "https://www.linkedin.com/in/prasaddsawant/"
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="cur"></div><div id="cur-r"></div>
-  <nav>
+    <nav>
     <a class="nav-logo" href="index.html">Prasad<span class="dot">.</span></a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="index.html#work" class="active">Work</a></li>
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#work">Work</a></li>
       <li><a href="index.html#training">Training</a></li>
       <li><a href="phishing-simulations.html">Phishing Simulations</a></li>
       <li><a href="blog.html">Blog</a></li>
@@ -96,33 +188,58 @@
       <div class="sh-label">Service Offering</div>
       <h1 class="sh-title">Gamification & E-Learning</h1>
       <p class="sh-desc">LMS-ready (SCORM/xAPI) modules combined with leaderboards, badges, digital escape rooms, and quizzes to transform mandatory compliance into competitive team-building experiences.</p>
-      <a class="btn btn-red" href="index.html#contact">Discuss a Project &rarr;</a>
-      
-      <div class="sh-features">
-        <div class="shf-item">
-          <h3>Escape Rooms</h3>
-          <p>Fully immersive, high-stakes simulated cybersecurity escape rooms where teams solve puzzles that enforce security concepts.</p>
-        </div>
-        <div class="shf-item">
-          <h3>SCORM / xAPI</h3>
-          <p>Enterprise-compliant packaging ensuring modules seamlessly integrate with existing corporate Learning Management Systems.</p>
-        </div>
-      </div>
 
-      <div class="game-showcase" style="margin-top: 60px; padding-top: 60px; border-top: 1px solid rgba(244,240,232,0.1); max-width: 800px;">
-        <div class="game-showcase-header" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 20px;">
-          <div style="flex: 1; min-width: 0;">
-            <div class="sh-label" style="margin-bottom: 16px;">Interactive Game</div>
-            <h3 style="font-family: var(--font-serif); font-size: 32px; color: var(--accent); margin-bottom: 16px;">Spot the Phish</h3>
-            <p style="font-size: 14px; color: rgba(244,240,232,0.6); line-height: 1.8; margin-bottom: 0;">Test your ability to identify common phishing indicators in real-world scenarios. Play the interactive simulation below.</p>
+      <div class="games-grid">
+        <!-- Tile 1 -->
+        <div class="game-tile" onclick="openFullscreenGame()">
+          <div class="game-tile-img">
+            <img src="assets/images/thumb_phish_typo.png" alt="Spot the Phish">
           </div>
-          <button onclick="openFullscreenGame()" style="padding: 10px 20px; background: transparent; border: 1px solid var(--accent); color: var(--accent); border-radius: 4px; cursor: pointer; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; transition: 0.3s;" onmouseover="this.style.background='var(--accent)'; this.style.color='#fff'" onmouseout="this.style.background='transparent'; this.style.color='var(--accent)'">
-            Fullscreen
-          </button>
+          <div class="game-tile-content">
+            <div class="gt-label">Interactive Game</div>
+            <h3 class="gt-title">Spot the Phish</h3>
+            <p class="gt-desc">Test your ability to identify common phishing indicators in real-world scenarios.</p>
+            <div class="gt-play">Play Now</div>
+          </div>
         </div>
-        
-        <div class="game-thumbnail">
-          <iframe id="phish-game" src="game.html" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: block;" title="Spot the Phish Game"></iframe>
+
+        <!-- Tile 2 -->
+        <div class="game-tile" onclick="openFullscreenDeskGame()">
+          <div class="game-tile-img">
+            <img src="assets/images/thumb_cleandesk_typo.png" alt="Clean Desk Dilemma">
+          </div>
+          <div class="game-tile-content">
+            <div class="gt-label">Cinematic Point-and-Click Game</div>
+            <h3 class="gt-title">Clean Desk Dilemma</h3>
+            <p class="gt-desc">Step into the shoes of a weekend security patrolling officer. Can you spot every physical security violation?</p>
+            <div class="gt-play">Play Now</div>
+          </div>
+        </div>
+
+        <!-- Tile 3 -->
+        <div class="game-tile" onclick="openFullscreenSpyGame()">
+          <div class="game-tile-img">
+            <img src="assets/images/thumb_crisis_typo.png" alt="Crisis Command Center">
+          </div>
+          <div class="game-tile-content">
+            <div class="gt-label">Crisis Simulator</div>
+            <h3 class="gt-title">Crisis Command Center</h3>
+            <p class="gt-desc">You are the lead operator at the global command center during an escalating cyber crisis. Filter incoming communications.</p>
+            <div class="gt-play">Play Now</div>
+          </div>
+        </div>
+
+        <!-- Tile 4 -->
+        <div class="game-tile" onclick="openFullscreenTerminalGame()">
+          <div class="game-tile-img">
+            <img src="assets/images/thumb_airport_typo.png" alt="CyberPort Terminal">
+          </div>
+          <div class="game-tile-content">
+            <div class="gt-label">Airport Security Simulator</div>
+            <h3 class="gt-title">CyberPort Terminal</h3>
+            <p class="gt-desc">Inspect incoming luggage on the conveyor belt and ensure no threats make it through during the layover lockdown.</p>
+            <div class="gt-play">Play Now</div>
+          </div>
         </div>
       </div>
     </div>
@@ -139,22 +256,10 @@
   </footer>
   <script src="js/main.js"></script>
   <script>
-    function openFullscreenGame() {
-      var elem = document.getElementById("phish-game");
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen().catch(function() {
-          /* Fallback if promise rejected (e.g. some mobiles block it) */
-          window.open("game.html", "_blank");
-        });
-      } else if (elem.webkitRequestFullscreen) { /* Safari */
-        elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) { /* IE11 */
-        elem.msRequestFullscreen();
-      } else {
-        /* Fallback for iOS where fullscreen on non-video elements is unsupported */
-        window.open("game.html", "_blank");
-      }
-    }
+    function openFullscreenGame() { window.open("game.html", "_blank"); }
+    function openFullscreenDeskGame() { window.open("Weekend Clean Desk Dilemma.html", "_blank"); }
+    function openFullscreenSpyGame() { window.open("spygame.html", "_blank"); }
+    function openFullscreenTerminalGame() { window.open("Newgame_CS.html", "_blank"); }
   </script>
 </body>
 </html>

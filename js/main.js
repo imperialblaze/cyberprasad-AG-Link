@@ -40,16 +40,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ─── ACTIVE NAV LINKS ─── */
-  const sections  = document.querySelectorAll('section[id]');
-  const navLinks  = document.querySelectorAll('.nav-links a[href*="#"]');
+  const sections  = document.querySelectorAll('section[id], div#threat');
+  const navLinks  = document.querySelectorAll('.nav-links a');
 
   function setActiveLink() {
+    if (sections.length === 0) return; // Only process on pages with sections
     let current = '';
     sections.forEach(sec => {
       if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
     });
     navLinks.forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href').includes(current) && current !== '');
+      let href = a.getAttribute('href');
+      if (current === 'threat' && href.includes('phishing-simulations.html')) {
+        a.classList.add('active');
+      } else if (current && href.includes('#' + current)) {
+        a.classList.add('active');
+      } else if (href.includes('#') || href.includes('phishing-simulations.html')) {
+        a.classList.remove('active');
+      }
     });
   }
   window.addEventListener('scroll', setActiveLink, { passive: true });

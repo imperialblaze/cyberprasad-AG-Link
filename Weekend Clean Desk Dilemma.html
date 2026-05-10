@@ -546,6 +546,29 @@
         }
         .end-replay:hover { background: var(--amber); color: #000; }
     </style>
+  <!-- SEO & AI Meta Tags -->
+  <meta name="author" content="Prasad Sawant" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta property="og:title" content="Prasad Sawant | Cybersecurity Awareness Specialist" />
+  <meta property="og:description" content="Building security cultures through immersive learning, phishing simulations, and human-risk programs. Over 25,000 professionals trained." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="heroimagetedx1.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Prasad Sawant | Cybersecurity" />
+  <meta name="twitter:description" content="Cybersecurity awareness specialist designing immersive learning and phishing simulations." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Prasad Sawant",
+    "jobTitle": "Cybersecurity Awareness Specialist",
+    "description": "Building security cultures through immersive learning, phishing simulations, and human-risk programs.",
+    "knowsAbout": ["Cybersecurity Awareness", "Phishing Simulations", "Instructional Design", "Gamification", "Human Risk Management"],
+    "sameAs": [
+      "https://www.linkedin.com/in/prasaddsawant/"
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -581,7 +604,7 @@
                 <span>DILEMMA</span>
             </h1>
             <div class="splash-divider"></div>
-            <div class="splash-story">It's Friday, 6:00 PM. You're the last one leaving the office. As you walk to the exit, you notice several coworkers have left a mess. Can you spot every security violation before you leave?</div>
+            <div class="splash-story">It's Friday, 6:00 PM. You've been assigned as the weekend security patrolling officer. As you walk your route, you notice several coworkers have left a mess. Can you spot every security violation before you finish your shift?</div>
             <div class="splash-meta">
                 <div class="splash-meta-item">6 Threat Zones</div>
                 <div class="splash-meta-item">ISO 27001 Aligned</div>
@@ -650,7 +673,7 @@
             intro: "You pass the accounting wing. A desk lamp is still on. Something catches your eye…",
             time: 35,
             hotspots: [
-                { id:"sticky", top:"32%", left:"52%", icon:"📋", isViolation:true,
+                { id:"sticky", top:"66%", left:"45%", icon:"📋", isViolation:true,
                   title:"Sticky Note on Monitor",
                   desc:"A yellow sticky note reads: \"Winter2026! — SAP login\". Plaintext credentials in full view of anyone passing by.",
                   actions:[
@@ -658,10 +681,10 @@
                     { text:"Take a photo and report to IT", correct:false, points:-50, feedback:"Photographing credentials creates a second exposure — the password now lives in your camera roll.", compliance:"CIS Control 3 — Data Protection" },
                     { text:"Leave it — not your department", correct:false, points:-75, feedback:"Ignoring a known vulnerability makes you complicit. All employees share security responsibility.", compliance:"ISO 27001 A.7.2.2 — Security Awareness" }
                   ]},
-                { id:"mug", top:"72%", left:"30%", icon:"☕", isViolation:false, flavor:"A half-finished cold latte. Tragic, but not a data risk." },
-                { id:"plant", top:"40%", left:"82%", icon:"🌿", isViolation:false, flavor:"A sad office fern. It needs water, not an incident report." },
-                { id:"stapler", top:"80%", left:"68%", icon:"📎", isViolation:false, flavor:"A regulation red stapler. Not a security issue." },
-                { id:"headphones", top:"55%", left:"18%", icon:"🎧", isViolation:false, flavor:"Noise-cancelling headphones left behind. No data risk." }
+                { id:"mug", top:"76%", left:"30%", icon:"☕", isViolation:false, flavor:"A half-finished cold latte. Tragic, but not a data risk." },
+                { id:"plant", top:"41%", left:"7%", icon:"🌿", isViolation:false, flavor:"A sad office fern. It needs water, not an incident report." },
+                { id:"stapler", top:"71%", left:"36%", icon:"📎", isViolation:false, flavor:"A regulation red stapler. Not a security issue." },
+                { id:"headphones", top:"85%", left:"50%", icon:"🎧", isViolation:false, flavor:"Noise-cancelling headphones left behind. No data risk." }
             ]
         },
         {
@@ -671,7 +694,7 @@
             intro: "The communal printer is still humming. Its output tray has something sitting in it…",
             time: 35,
             hotspots: [
-                { id:"printout", top:"42%", left:"50%", icon:"📄", isViolation:true,
+                { id:"printout", top:"82%", left:"32%", icon:"📄", isViolation:true,
                   title:"Unattended Print Job",
                   desc:"A 12-page document titled \"Q3 Client Revenue Summary — CONFIDENTIAL\" sitting uncollected in the output tray.",
                   actions:[
@@ -679,9 +702,9 @@
                     { text:"Shred it and notify the print owner", correct:true, points:150, feedback:"Textbook. You eliminated the exposure AND alerted the owner to reprint securely.", compliance:"CIS Control 3.4 — Enforce Data Retention" },
                     { text:"Leave it face-down on the tray", correct:false, points:-75, feedback:"Flipping it over changes nothing. Any passerby could pick it up.", compliance:"ISO 27001 A.11.2.9 — Clear Desk Policy" }
                   ]},
-                { id:"paperjam", top:"68%", left:"28%", icon:"⚙️", isViolation:false, flavor:"Paper-jam indicator. An IT ticket, not a security one." },
-                { id:"toner", top:"28%", left:"75%", icon:"🖨️", isViolation:false, flavor:"Toner at 40%. It'll survive the weekend." },
-                { id:"outlet", top:"85%", left:"55%", icon:"🔌", isViolation:false, flavor:"A surge-protected power strip. All plugged in safely." }
+                { id:"paperjam", top:"43%", left:"56%", icon:"⚙️", isViolation:false, flavor:"Paper-jam indicator. An IT ticket, not a security one." },
+                { id:"toner", top:"60%", left:"45%", icon:"🖨️", isViolation:false, flavor:"Toner at 40%. It'll survive the weekend." },
+                { id:"outlet", top:"67%", left:"25%", icon:"🔌", isViolation:false, flavor:"A surge-protected power strip. All plugged in safely." }
             ]
         },
         {
@@ -691,7 +714,7 @@
             intro: "The glass-walled meeting room still has the lights on. The whiteboard hasn't been erased…",
             time: 30,
             hotspots: [
-                { id:"wb", top:"38%", left:"45%", icon:"📝", isViolation:true,
+                { id:"wb", top:"43%", left:"35%", icon:"📝", isViolation:true,
                   title:"Whiteboard with Sensitive Data",
                   desc:"The whiteboard shows a full network architecture diagram including IP ranges, server names, and database credentials for the staging environment.",
                   actions:[
@@ -699,9 +722,9 @@
                     { text:"Close the blinds on the room", correct:false, points:-50, feedback:"The data is still exposed. Anyone who opens the blinds will see everything. Erase the source.", compliance:"CIS Control 3 — Data Protection" },
                     { text:"Take a photo for evidence, then erase", correct:false, points:-25, feedback:"You just photographed network credentials onto your personal device. Erase first, report verbally.", compliance:"ISO 27001 A.8.2.3 — Information Handling" }
                   ]},
-                { id:"marker", top:"65%", left:"70%", icon:"🖊️", isViolation:false, flavor:"A dried-out whiteboard marker. A supply issue, not security." },
-                { id:"tvremote", top:"75%", left:"35%", icon:"📺", isViolation:false, flavor:"A TV remote for the presentation display. Innocuous." },
-                { id:"chair2", top:"82%", left:"55%", icon:"🪑", isViolation:false, flavor:"Conference chairs pushed back. Messy, but harmless." }
+                { id:"marker", top:"60%", left:"35%", icon:"🖊️", isViolation:false, flavor:"A dried-out whiteboard marker. A supply issue, not security." },
+                { id:"tvremote", top:"78%", left:"44%", icon:"📺", isViolation:false, flavor:"A TV remote for the presentation display. Innocuous." },
+                { id:"chair2", top:"89%", left:"24%", icon:"🪑", isViolation:false, flavor:"Conference chairs pushed back. Messy, but harmless." }
             ]
         },
         {
@@ -711,7 +734,7 @@
             intro: "Near the exit, a monitor glows in the darkness. Someone didn't log off…",
             time: 35,
             hotspots: [
-                { id:"unlocked", top:"38%", left:"48%", icon:"💻", isViolation:true,
+                { id:"unlocked", top:"43%", left:"62%", icon:"💻", isViolation:true,
                   title:"Unlocked Workstation",
                   desc:"The developer's PC is fully unlocked — code repository, Slack, AND a database admin panel all visible. Accessible to anyone.",
                   actions:[
@@ -719,10 +742,10 @@
                     { text:"Log out of all their applications", correct:false, points:-25, feedback:"By interacting with their apps, YOU now have access logs tied to your badge. Lock, don't log out.", compliance:"CIS Control 6 — Access Control Management" },
                     { text:"Just turn off the monitor", correct:false, points:-75, feedback:"The machine is still accessible behind a dark screen. Anyone could bump the mouse.", compliance:"ISO 27001 A.9.3.1 — Authentication Info" }
                   ]},
-                { id:"chair3", top:"75%", left:"30%", icon:"🪑", isViolation:false, flavor:"An ergonomic chair pushed back. Someone left in a rush." },
-                { id:"water2", top:"55%", left:"78%", icon:"🫗", isViolation:false, flavor:"An open water bottle. Spill hazard, not a security breach." },
-                { id:"charger", top:"82%", left:"62%", icon:"🔋", isViolation:false, flavor:"A phone charger cable. No phone attached." },
-                { id:"snack", top:"68%", left:"15%", icon:"🍫", isViolation:false, flavor:"Half-eaten granola bar. Questionable, not a violation." }
+                { id:"chair3", top:"82%", left:"25%", icon:"🪑", isViolation:false, flavor:"An ergonomic chair pushed back. Someone left in a rush." },
+                { id:"water2", top:"71%", left:"75%", icon:"🫗", isViolation:false, flavor:"An open water bottle. Spill hazard, not a security breach." },
+                { id:"charger", top:"71%", left:"65%", icon:"🔋", isViolation:false, flavor:"A phone charger cable. No phone attached." },
+                { id:"snack", top:"71%", left:"42%", icon:"🍫", isViolation:false, flavor:"Half-eaten granola bar. Questionable, not a violation." }
             ]
         },
         {
@@ -732,7 +755,7 @@
             intro: "You notice the HR alcove. One of the filing cabinets isn't fully closed…",
             time: 30,
             hotspots: [
-                { id:"cab", top:"45%", left:"42%", icon:"🗄️", isViolation:true,
+                { id:"cab", top:"59%", left:"40%", icon:"🗄️", isViolation:true,
                   title:"Unlocked Filing Cabinet",
                   desc:"A cabinet drawer is ajar. Inside: folders labeled \"Employee Medical Records\", \"Salary Reviews 2026\", and \"Disciplinary Actions\". All classified PII.",
                   actions:[
@@ -740,9 +763,9 @@
                     { text:"Push the drawer shut (no key)", correct:false, points:-25, feedback:"Shut but not locked. Anyone can pull it open again. These records require positive locking.", compliance:"ISO 27001 A.8.2.3 — Handling of Assets" },
                     { text:"Report to HR on Monday", correct:false, points:-75, feedback:"The entire weekend, cleaners and contractors will have access to unprotected PII. Can't wait 60+ hours.", compliance:"GDPR Art. 32 — Security of Processing" }
                   ]},
-                { id:"binder", top:"30%", left:"70%", icon:"📚", isViolation:false, flavor:"A binder labeled \"Office Social Committee.\" Party planning, not personal data." },
-                { id:"trash", top:"78%", left:"50%", icon:"🗑️", isViolation:false, flavor:"A full wastebasket. Should be emptied, but no sensitive documents visible." },
-                { id:"clock", top:"20%", left:"25%", icon:"🕐", isViolation:false, flavor:"A wall clock reading 6:15 PM. Time is ticking." }
+                { id:"binder", top:"59%", left:"10%", icon:"📚", isViolation:false, flavor:"A binder labeled \"Office Social Committee.\" Party planning, not personal data." },
+                { id:"trash", top:"76%", left:"65%", icon:"🗑️", isViolation:false, flavor:"A full wastebasket. Should be emptied, but no sensitive documents visible." },
+                { id:"clock", top:"32%", left:"55%", icon:"🕐", isViolation:false, flavor:"A wall clock reading 6:15 PM. Time is ticking." }
             ]
         },
         {
@@ -752,7 +775,7 @@
             intro: "Almost at the exit. The reception desk is abandoned, but something is left on the counter…",
             time: 30,
             hotspots: [
-                { id:"badge", top:"50%", left:"48%", icon:"🪪", isViolation:true,
+                { id:"badge", top:"82%", left:"35%", icon:"🪪", isViolation:true,
                   title:"Unattended Visitor Badge",
                   desc:"A visitor badge reads \"VISITOR — James Chen, Deloitte — Escorted Access Only\" and is still active (not signed out).",
                   actions:[
@@ -760,10 +783,10 @@
                     { text:"Put it in the lost-and-found drawer", correct:false, points:-50, feedback:"The badge is still active! Anyone who finds it could use it to enter restricted areas.", compliance:"CIS Control 6.7 — Disable Dormant Accounts" },
                     { text:"Leave it for reception Monday AM", correct:false, points:-75, feedback:"48+ hours with an active, unmonitored visitor badge. Weekend staff could use it to bypass escort requirements.", compliance:"ISO 27001 A.11.1.6 — Delivery/Loading Areas" }
                   ]},
-                { id:"flowers", top:"35%", left:"75%", icon:"💐", isViolation:false, flavor:"Artificial flowers. The reception aesthetic is safe from audit." },
-                { id:"bell", top:"65%", left:"25%", icon:"🔔", isViolation:false, flavor:"A service bell. Nobody's here to answer." },
-                { id:"sign", top:"22%", left:"50%", icon:"🪧", isViolation:false, flavor:"A \"Welcome Visitors\" sign. Standard lobby decor." },
-                { id:"sanitizer", top:"78%", left:"70%", icon:"🧴", isViolation:false, flavor:"Hand sanitizer. The only safe thing left in this building." }
+                { id:"flowers", top:"59%", left:"55%", icon:"💐", isViolation:false, flavor:"Artificial flowers. The reception aesthetic is safe from audit." },
+                { id:"bell", top:"69%", left:"25%", icon:"🔔", isViolation:false, flavor:"A service bell. Nobody's here to answer." },
+                { id:"sign", top:"25%", left:"65%", icon:"🪧", isViolation:false, flavor:"A \"Welcome Visitors\" sign. Standard lobby decor." },
+                { id:"sanitizer", top:"76%", left:"60%", icon:"🧴", isViolation:false, flavor:"Hand sanitizer. The only safe thing left in this building." }
             ]
         }
     ];

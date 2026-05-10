@@ -964,72 +964,32 @@
       font-weight: 500;
     }
 
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border: 1px solid var(--border);
-      margin-bottom: 40px;
-    }
-
-    .skill-cell {
-      padding: 18px 22px;
-      border-bottom: 1px solid var(--border);
-      border-right: 1px solid var(--border);
-    }
-
-    .skill-cell:nth-child(2n) {
-      border-right: none;
-    }
-
-    .skill-cell:nth-last-child(-n+2) {
-      border-bottom: none;
-    }
-
-    .skill-name {
-      font-size: 11.5px;
-      color: var(--ink);
-      margin-bottom: 9px;
-    }
-
-    .skill-bar {
-      height: 2px;
-      background: var(--border);
-    }
-
-    .skill-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--gold));
-      animation: skillGrow 1.4s var(--ease-out) both;
-    }
-
-    @keyframes skillGrow {
-      from {
-        width: 0 !important;
-      }
-    }
-
-    .creds {
+    .skills-pills {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+      margin-bottom: 20px;
     }
 
-    .cred-tag {
-      padding: 9px 16px;
-      border: 1px solid var(--border-strong);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      display: flex;
+    .skill-pill {
+      background: rgba(244, 240, 232, 0.4);
+      border: 1px solid rgba(10, 12, 15, 0.08);
+      color: var(--ink);
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
     }
 
-    .cred-tag::before {
-      content: '✓';
-      color: var(--accent);
+    .skill-pill:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(200, 64, 26, 0.2);
     }
 
     /* ─── CTA BAND ─── */
@@ -1191,6 +1151,29 @@
       }
     }
   </style>
+  <!-- SEO & AI Meta Tags -->
+  <meta name="author" content="Prasad Sawant" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta property="og:title" content="Prasad Sawant | Cybersecurity Awareness Specialist" />
+  <meta property="og:description" content="Building security cultures through immersive learning, phishing simulations, and human-risk programs. Over 25,000 professionals trained." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="heroimagetedx1.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Prasad Sawant | Cybersecurity" />
+  <meta name="twitter:description" content="Cybersecurity awareness specialist designing immersive learning and phishing simulations." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Prasad Sawant",
+    "jobTitle": "Cybersecurity Awareness Specialist",
+    "description": "Building security cultures through immersive learning, phishing simulations, and human-risk programs.",
+    "knowsAbout": ["Cybersecurity Awareness", "Phishing Simulations", "Instructional Design", "Gamification", "Human Risk Management"],
+    "sameAs": [
+      "https://www.linkedin.com/in/prasaddsawant/"
+    ]
+  }
+  </script>
 </head>
 
 <body>
@@ -1304,19 +1287,19 @@
 
     <div class="work-grid">
 
-      <!-- Tile 1: Live Trainings -->
-      <a href="live-trainings.html" class="work-item reveal">
+      <!-- Tile 1: Gamification & SCORM -->
+      <a href="gamification.html" class="work-item reveal">
         <div class="wi-top">
-          <div class="wi-icon">👨🏼‍🏫</div>
+          <div class="wi-icon">🎮</div>
         </div>
         <div class="wi-info">
-          <div class="wi-name">Live Trainings</div>
-          <div class="wi-desc">High-energy in-person and virtual sessions for audiences from 20 to 500+. Live threat
-            demos, real-time phishing tests, interactive polls, and role-specific discussions.</div>
+          <div class="wi-name">Gamification & E-Learning</div>
+          <div class="wi-desc">LMS-ready (SCORM/xAPI) modules combined with leaderboards, badges, digital escape rooms,
+            and quizzes to transform mandatory compliance into competitive team-building experiences.</div>
           <div class="wi-footer">
             <div class="wi-tags">
-              <span class="wi-tag hot">In-Person & Virtual</span>
-              <span class="wi-tag">Interactive</span>
+              <span class="wi-tag hot">Escape Rooms</span>
+              <span class="wi-tag">SCORM / xAPI</span>
             </div>
             <div class="wi-arrow">→</div>
           </div>
@@ -1362,19 +1345,19 @@
         </div>
       </a>
 
-      <!-- Tile 4: Gamification & SCORM -->
-      <a href="gamification.html" class="work-item reveal stagger-1">
+      <!-- Tile 4: Live Trainings -->
+      <a href="live-trainings.html" class="work-item reveal stagger-1">
         <div class="wi-top">
-          <div class="wi-icon">🎮</div>
+          <div class="wi-icon">👨🏼‍🏫</div>
         </div>
         <div class="wi-info">
-          <div class="wi-name">Gamification & E-Learning</div>
-          <div class="wi-desc">LMS-ready (SCORM/xAPI) modules combined with leaderboards, badges, digital escape rooms,
-            and quizzes to transform mandatory compliance into competitive team-building experiences.</div>
+          <div class="wi-name">Live Trainings</div>
+          <div class="wi-desc">High-energy in-person and virtual sessions for audiences from 20 to 500+. Live threat
+            demos, real-time phishing tests, interactive polls, and role-specific discussions.</div>
           <div class="wi-footer">
             <div class="wi-tags">
-              <span class="wi-tag hot">Escape Rooms</span>
-              <span class="wi-tag">SCORM / xAPI</span>
+              <span class="wi-tag hot">In-Person & Virtual</span>
+              <span class="wi-tag">Interactive</span>
             </div>
             <div class="wi-arrow">→</div>
           </div>
@@ -1599,50 +1582,16 @@
           to what actually changes how people respond to real threats.
         </p>
 
-        <div class="skills-grid">
-          <div class="skill-cell">
-            <div class="skill-name">Instructional Design</div>
-            <div class="skill-bar">
-              <div class="skill-fill" style="width:95%"></div>
-            </div>
-          </div>
-          <div class="skill-cell">
-            <div class="skill-name">Phishing Simulations</div>
-            <div class="skill-bar">
-              <div class="skill-fill" style="width:93%"></div>
-            </div>
-          </div>
-          <div class="skill-cell">
-            <div class="skill-name">SCORM / xAPI / LMS</div>
-            <div class="skill-bar">
-              <div class="skill-fill" style="width:90%"></div>
-            </div>
-          </div>
-          <div class="skill-cell">
-            <div class="skill-name">Programme Strategy</div>
-            <div class="skill-bar">
-              <div class="skill-fill" style="width:88%"></div>
-            </div>
-          </div>
-          <div class="skill-cell">
-            <div class="skill-name">Gamification Design</div>
-            <div class="skill-bar">
-              <div class="skill-fill" style="width:85%"></div>
-            </div>
-          </div>
-          <div class="skill-cell">
-            <div class="skill-name">Executive Communication</div>
-            <div class="skill-bar">
-              <div class="skill-fill" style="width:82%"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="creds">
-          <div class="cred-tag">Security Awareness Pro</div>
-          <div class="cred-tag">Certified Instructional Designer</div>
-          <div class="cred-tag">Mumbai, India</div>
-          <div class="cred-tag">Global Delivery</div>
+        <div class="skills-pills">
+          <div class="skill-pill">Classroom Training</div>
+          <div class="skill-pill">Virtual Trainings</div>
+          <div class="skill-pill">LMS Management</div>
+          <div class="skill-pill">Content Writing</div>
+          <div class="skill-pill">Content Designing</div>
+          <div class="skill-pill">Phishing Simulations</div>
+          <div class="skill-pill">Gamification</div>
+          <div class="skill-pill">Records Management</div>
+          <div class="skill-pill">Risk & Compliance Alignment</div>
         </div>
       </div>
     </div>
@@ -1663,13 +1612,13 @@
     </p>
     <div class="cta-btns">
       <a class="btn btn-inv" href="mailto:prasadsawant2497@gmail.com">prasadsawant2497@gmail.com →</a>
-      <a class="btn btn-ghost-light" href="#">Download CV</a>
+      <a class="btn btn-ghost-light" href="assets/Resume/Prasad%20Sawant_Infosec%20Awareness_Resume%202025.pdf" target="_blank">Download Resume</a>
     </div>
 
     <div class="contact-links">
       <a href="https://www.linkedin.com/in/prasaddsawant/">LinkedIn</a>
       <a href="blog.html">Blog</a>
-      <a href="mailto:prasad.sawant@email.com">Email</a>
+      <a href="mailto:prasadsawant2497@gmail.com">Email</a>
     </div>
   </section>
 
