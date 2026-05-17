@@ -622,18 +622,52 @@
       toggleBtn.style.display = 'none';
 
       try {
-        const res = await fetch('/.netlify/functions/generate-phish', {
+        const apiKey = "AIzaSyBp4fXAhekf7pZBwFfSJbv89UGL36aWIhE";
+        const prompt = `
+          Act as an expert cybersecurity awareness trainer. Create a highly realistic phishing email template targeting the "${dept}" department, using a "${vector}" attack vector.
+          
+          You must respond strictly with a valid JSON object matching this exact structure (no markdown formatting, no code blocks, just raw JSON):
+          {
+            "category": "AI Generated",
+            "name": "Short descriptive name",
+            "desc": "Short description of the lure",
+            "from": "Sender Name &lt;<span class='red-flag'>fake@domain.com<span class='red-flag-explainer'>Why this is fake</span></span>&gt;",
+            "to": "employee@company.com",
+            "subject": "The email subject",
+            "date": "Today, 10:00 AM",
+            "body": "The full HTML body of the email. Keep it professional, corporate, and realistic."
+          }
+
+          CRITICAL INSTRUCTIONS FOR THE HTML BODY:
+          - Use inline CSS styling (e.g., <div style="...">).
+          - Include at least 3 distinct "Red Flags" within the HTML body to act as the interactive phishing markers.
+          - A red flag MUST be formatted exactly like this:
+            <span class='red-flag'>suspicious text or link here<span class='red-flag-explainer'>Explanation of why this is a phishing indicator.</span></span>
+          - Be creative with the social engineering tactics (urgency, authority, curiosity).
+        `;
+
+        const requestBody = {
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.7 }
+        };
+
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ department: dept, vector: vector })
+          body: JSON.stringify(requestBody)
         });
 
         if (!res.ok) {
           const errorData = await res.json();
-          throw new Error(errorData.error || "API request failed");
+          throw new Error(errorData.error?.message || "API request failed");
         }
 
-        const newPhish = await res.json();
+        const data = await res.json();
+        let generatedText = data.candidates[0].content.parts[0].text;
+
+        generatedText = generatedText.replace(/```json/gi, '').replace(/```/g, '').trim();
+
+        const newPhish = JSON.parse(generatedText);
 
         document.getElementById('empty-state').style.display = 'none';
         document.getElementById('email-content').style.display = 'flex';
