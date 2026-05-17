@@ -468,7 +468,7 @@
   <div id="cur-r"></div>
 
   <!-- ════════════════ NAVIGATION ════════════════ -->
-    <nav>
+        <nav>
     <a class="nav-logo" href="index.html">Prasad<span class="dot">.</span></a>
     <ul class="nav-links">
       <li><a href="index.html#home">Home</a></li>
@@ -499,25 +499,7 @@
           <div class="sidebar-subtitle">Interactive Sandbox</div>
         </div>
 
-        <!-- AI Generator Panel -->
-        <div style="padding: 16px 24px; background: rgba(200, 64, 26, 0.04); border-bottom: 1px solid var(--border); border-left: 3px solid var(--accent);">
-          <div style="font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-            <span>✨</span> AI Phish Generator
-          </div>
-          <select id="ai-dept" style="width: 100%; margin-bottom: 8px; padding: 8px; font-family: var(--font-body); font-size: 12px; border: 1px solid var(--border-strong); border-radius: 4px; background: white; outline: none;">
-            <option value="Human Resources">Target: HR</option>
-            <option value="Finance & Accounting">Target: Finance</option>
-            <option value="IT Support">Target: IT Support</option>
-            <option value="Executive Team">Target: Executives</option>
-          </select>
-          <select id="ai-vector" style="width: 100%; margin-bottom: 12px; padding: 8px; font-family: var(--font-body); font-size: 12px; border: 1px solid var(--border-strong); border-radius: 4px; background: white; outline: none;">
-            <option value="Urgent Invoice Payment">Vector: Urgent Invoice</option>
-            <option value="Mandatory Policy Update">Vector: Policy Signature</option>
-            <option value="Password Expiry Notice">Vector: Password Expiry</option>
-            <option value="Fake Job Applicant Resume">Vector: Malicious Resume</option>
-          </select>
-          <button id="ai-generate-btn" style="width: 100%; padding: 10px; background: var(--ink); color: var(--paper); border: none; border-radius: 4px; font-family: var(--font-display); font-size: 12px; letter-spacing: 0.5px; cursor: pointer; transition: background 0.2s;" onclick="generateAIPhish()">Generate Custom Lure</button>
-        </div>
+
 
         <div id="template-list">
           <!-- Templates injected by JS -->
@@ -927,41 +909,7 @@
       }
     }
 
-    async function generateAIPhish() {
-      const btn = document.getElementById('ai-generate-btn');
-      const dept = document.getElementById('ai-dept').value;
-      const vector = document.getElementById('ai-vector').value;
 
-      btn.innerText = "Generating... ✨";
-      btn.style.background = "var(--accent)";
-      btn.disabled = true;
-
-      try {
-        const res = await fetch('/.netlify/functions/generate-phish', {
-          method: 'POST',
-          body: JSON.stringify({ department: dept, vector: vector })
-        });
-        
-        if (!res.ok) throw new Error("API failed");
-        
-        const newPhish = await res.json();
-        
-        // Add to beginning of array
-        templates.unshift(newPhish);
-        
-        // Re-render and select the new one
-        renderList();
-        selectTemplate(0);
-        
-      } catch (err) {
-        console.error(err);
-        alert("Failed to generate AI Phish. Have you set GEMINI_API_KEY in Netlify Environment Variables?");
-      } finally {
-        btn.innerText = "Generate Custom Lure";
-        btn.style.background = "var(--ink)";
-        btn.disabled = false;
-      }
-    }
 
     // Init
     renderList();
