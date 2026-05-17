@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="AI Phishing Generator. Create realistic, highly targeted phishing lures using Google's Gemini AI." />
+  <title>AI Phishing Generator | Prasad Sawant</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ══════════════════════════════════
+       AI PHISH GENERATOR STYLES
+       ══════════════════════════════════ */
+    .generator-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 40px;
+      height: 780px;
+      margin-top: 20px;
+      animation: reveal 0.8s var(--ease-out) forwards;
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ─── SIDEBAR ─── */
+    .gen-sidebar {
+      background: var(--warm);
+      border: 1px solid var(--border-med);
+      border-radius: 8px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 24px rgba(10, 12, 15, 0.04);
+      overflow-y: auto;
+    }
+
+    .gen-sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .gen-sidebar::-webkit-scrollbar-track {
+      background: var(--warm);
+    }
+
+    .gen-sidebar::-webkit-scrollbar-thumb {
+      background: var(--muted-light);
+    }
+
+    .sidebar-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 1px;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .sidebar-subtitle {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      background: white;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent);
+    }
+
+    .gen-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      border-radius: 4px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 10px;
+    }
+
+    .gen-btn:hover {
+      background: var(--accent);
+    }
+
+    .gen-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    /* ─── MAC OS WINDOW & OUTLOOK WRAPPER ─── */
+    .phish-main {
+      background: #f3f2f1;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .mac-header {
+      height: 42px;
+      background: linear-gradient(to bottom, #f2f2f2, #e0e0e0);
+      border-bottom: 1px solid #b3b3b3;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      position: relative;
+    }
+
+    .mac-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mac-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .mac-btn.close {
+      background: #ff5f56;
+      border: 1px solid #e0443e;
+    }
+
+    .mac-btn.minimize {
+      background: #ffbd2e;
+      border: 1px solid #dea123;
+    }
+
+    .mac-btn.maximize {
+      background: #27c93f;
+      border: 1px solid #1aab29;
+    }
+
+    .mac-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    /* OUTLOOK RIBBON & TOOLBAR */
+    .outlook-ribbon {
+      background: #0078d4;
+      display: flex;
+      padding: 6px 16px 0 16px;
+    }
+
+    .ol-tab {
+      color: rgba(255, 255, 255, 0.9);
+      padding: 8px 16px;
+      font-size: 13px;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      cursor: pointer;
+    }
+
+    .ol-tab.active {
+      background: #f3f2f1;
+      color: #323130;
+      border-radius: 4px 4px 0 0;
+      font-weight: 600;
+    }
+
+    .outlook-toolbar {
+      background: #f3f2f1;
+      border-bottom: 1px solid #edebe9;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      z-index: 5;
+    }
+
+    .ol-tool {
+      font-size: 13px;
+      color: #323130;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: background 0.1s;
+    }
+
+    .ol-tool:hover {
+      background: #e1dfdd;
+    }
+
+    .ol-icon {
+      font-size: 15px;
+      color: #0078d4;
+      font-weight: bold;
+    }
+
+    .ol-separator {
+      width: 1px;
+      height: 20px;
+      background: #c8c6c4;
+      margin: 0 4px;
+    }
+
+    /* SPOT PHISH BUTTON */
+    .btn-toggle-flags {
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      padding: 8px 20px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: crosshair;
+      border-radius: 3px;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-toggle-flags:hover {
+      background: var(--accent);
+    }
+
+    .btn-toggle-flags:active {
+      transform: scale(0.98);
+    }
+
+    .btn-toggle-flags.active-flags {
+      background: var(--accent);
+    }
+
+    /* READING PANE */
+    .outlook-reading-pane {
+      background: white;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--muted);
+      text-align: center;
+      padding: 40px;
+    }
+
+    .email-header {
+      padding: 30px 40px 20px 40px;
+      border-bottom: 1px solid #edebe9;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    .er-subject {
+      font-size: 22px;
+      font-weight: 600;
+      color: #242424;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .sender-details {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .sender-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #0078d4;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .er-val.name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #323130;
+      margin-bottom: 2px;
+    }
+
+    .er-val.to {
+      font-size: 13px;
+      color: #605e5c;
+    }
+
+    .er-date {
+      font-size: 13px;
+      color: #605e5c;
+    }
+
+    .email-body {
+      padding: 40px;
+      flex: 1;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    /* ─── RED FLAGS EFFECTS ─── */
+    .red-flag {
+      position: relative;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+
+    .red-flag::after {
+      content: '🚩';
+      position: absolute;
+      top: -12px;
+      right: -18px;
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(10px) scale(0.5);
+      transition: opacity 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .show-flags .red-flag::after {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .show-flags .red-flag {
+      background: rgba(200, 64, 26, 0.15) !important;
+      border-bottom: 2px dashed var(--accent) !important;
+    }
+
+    .red-flag-explainer {
+      display: none;
+      position: absolute;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-body);
+      font-size: 11px;
+      line-height: 1.4;
+      padding: 8px 12px;
+      width: max-content;
+      max-width: 250px;
+      left: 50%;
+      top: 100%;
+      transform: translateX(-50%) translateY(10px);
+      z-index: 20;
+      border-radius: 2px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .red-flag-explainer::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 4px 4px 4px;
+      border-style: solid;
+      border-color: transparent transparent var(--ink) transparent;
+    }
+
+    .show-flags .red-flag:hover .red-flag-explainer {
+      display: block;
+    }
+
+    @media (max-width: 1024px) {
+      .generator-layout {
+        grid-template-columns: 280px 1fr;
+        height: 600px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .generator-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+
+      .gen-sidebar {
+        max-height: 500px;
+      }
+
+      .phish-main {
+        min-height: 500px;
+      }
+
+      .email-body {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="cur"></div>
+  <div id="cur-r"></div>
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+      <nav>
+    <a class="nav-logo" href="index.html">Prasad<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#training">Training</a></li>
+      <li><a href="phishing-simulations.html">Phishing Simulations</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a class="nav-contact" href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ════════════════ HERO SECTION ════════════════ -->
+  <section style="padding-top: 96px; min-height: 100vh; background: var(--paper);">
+    <div class="s-label">Experimental Tool</div>
+    <h1 class="s-title" style="margin-bottom: 24px;">AI Phish <br><em>Generator</em></h1>
+    <p class="s-body" style="max-width: 600px;">
+      Generate realistic, highly targeted phishing lures using Google's Gemini AI. Test out varying attack vectors across
+      different departments to generate sophisticated simulation templates on the fly.
+    </p>
+
+    <div class="generator-layout">
+      <!-- SIDEBAR -->
+      <div class="gen-sidebar">
+        <div class="sidebar-title">Generator</div>
+        <div class="sidebar-subtitle">Configure Attack</div>
+
+
+
+        <div class="form-group">
+          <label class="form-label">Target Department</label>
+          <select id="ai-dept" class="form-control">
+            <option value="Human Resources">Human Resources</option>
+            <option value="Finance & Accounting">Finance & Accounting</option>
+            <option value="IT Support">IT Support</option>
+            <option value="Executive Team">Executive Team</option>
+            <option value="Marketing">Marketing</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Attack Vector</label>
+          <select id="ai-vector" class="form-control">
+            <option value="Urgent Invoice Payment">Urgent Invoice Payment</option>
+            <option value="Mandatory Policy Update">Mandatory Policy Update</option>
+            <option value="Password Expiry Notice">Password Expiry Notice</option>
+            <option value="Fake Job Applicant Resume">Malicious Resume</option>
+            <option value="Unusual Login Activity Alert">Unusual Login Alert</option>
+          </select>
+        </div>
+
+        <button id="generate-btn" class="gen-btn" onclick="generatePhish()">Generate Lure ✨</button>
+      </div>
+
+      <!-- MAIN VIEW (MAC OS + OUTLOOK) -->
+      <div class="phish-main" id="main-view">
+        <div class="mac-header">
+          <div class="mac-btns">
+            <div class="mac-btn close"></div>
+            <div class="mac-btn minimize"></div>
+            <div class="mac-btn maximize"></div>
+          </div>
+          <div class="mac-title">Inbox - Microsoft Outlook</div>
+        </div>
+
+        <div class="outlook-ribbon">
+          <div class="ol-tab active">Home</div>
+          <div class="ol-tab">View</div>
+          <div class="ol-tab">Help</div>
+        </div>
+
+        <div class="outlook-toolbar">
+          <div class="ol-tool"><span class="ol-icon">↺</span> Reply</div>
+          <div class="ol-tool"><span class="ol-icon" style="transform: rotateY(180deg); display:inline-block;">↺</span>
+            Forward</div>
+          <div class="ol-separator"></div>
+          <div class="ol-tool">🗑️ Delete</div>
+          <div class="ol-tool">📂 Archive</div>
+          <div class="ol-separator"></div>
+          <div class="ol-tool"><span style="color: #d13438; font-size:16px;">🛑</span> Report Phishing</div>
+          <div style="flex: 1;"></div>
+          <button class="btn-toggle-flags" id="toggle-flags-btn" onclick="toggleFlags()" style="display: none;">SPOT THE
+            PHISH (FLAGS)</button>
+        </div>
+
+        <div class="outlook-reading-pane" id="reading-pane">
+          <div class="empty-state" id="empty-state">
+            <div style="font-size: 48px; margin-bottom: 16px;">🎣</div>
+            <h3
+              style="font-family: var(--font-display); font-size: 24px; color: var(--ink); margin-bottom: 8px; margin-top: 0;">
+              Ready to Cast</h3>
+            <p style="font-size: 14px; max-width: 300px; line-height: 1.5; margin: 0;">Configure your target and attack vector in
+              the sidebar to generate a realistic phishing simulation.</p>
+          </div>
+
+          <div id="email-content" style="display: none; height: 100%; flex-direction: column;">
+            <div class="email-header">
+              <div style="flex: 1;">
+                <div class="er-subject" id="email-subject">Subject</div>
+                <div class="sender-details">
+                  <div class="sender-avatar" id="email-avatar">S</div>
+                  <div>
+                    <div class="er-val name" id="email-from">Sender</div>
+                    <div class="er-val to" id="email-to">To: employee@company.com</div>
+                  </div>
+                </div>
+              </div>
+              <div class="er-date" id="email-date">Date</div>
+            </div>
+            <div class="email-body" id="email-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ FOOTER ════════════════ -->
+  <footer>
+    <div class="footer-name">Prasad Sawant</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#training">Training</a>
+      <a href="phishing-simulations.html">Simulations</a>
+      <a href="ai-phish-generator.html">AI Generator</a>
+      <a href="blog.html">Blog</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 Prasad Sawant</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    let flagsVisible = false;
+    const bodyEl = document.getElementById('email-body');
+    const toggleBtn = document.getElementById('toggle-flags-btn');
+
+
+
+    function toggleFlags() {
+      flagsVisible = !flagsVisible;
+      if (flagsVisible) {
+        bodyEl.classList.add('show-flags');
+        toggleBtn.classList.add('active-flags');
+        toggleBtn.innerText = 'HIDE RED FLAGS';
+      } else {
+        bodyEl.classList.remove('show-flags');
+        toggleBtn.classList.remove('active-flags');
+        toggleBtn.innerText = 'SPOT THE PHISH (FLAGS)';
+      }
+    }
+
+    async function generatePhish() {
+      const dept = document.getElementById('ai-dept').value;
+      const vector = document.getElementById('ai-vector').value;
+      const btn = document.getElementById('generate-btn');
+
+      btn.innerText = "Generating... ✨";
+      btn.style.background = "var(--accent)";
+      btn.disabled = true;
+      document.getElementById('empty-state').style.display = 'flex';
+      document.getElementById('email-content').style.display = 'none';
+      toggleBtn.style.display = 'none';
+
+      try {
+        const res = await fetch('/.netlify/functions/generate-phish', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ department: dept, vector: vector })
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.error || "API request failed");
+        }
+
+        const newPhish = await res.json();
+
+        document.getElementById('empty-state').style.display = 'none';
+        document.getElementById('email-content').style.display = 'flex';
+
+        document.getElementById('email-from').innerHTML = newPhish.from;
+        document.getElementById('email-to').innerText = `To: ${newPhish.to}`;
+        document.getElementById('email-date').innerText = newPhish.date;
+        document.getElementById('email-subject').innerText = newPhish.subject;
+        bodyEl.innerHTML = newPhish.body;
+
+        const plainTextFrom = (newPhish.from || "").replace(/<[^>]*>/g, '').trim();
+        let init = plainTextFrom ? plainTextFrom.charAt(0).toUpperCase() : '👤';
+        document.getElementById('email-avatar').innerText = init;
+
+        flagsVisible = false;
+        bodyEl.classList.remove('show-flags');
+        toggleBtn.classList.remove('active-flags');
+        toggleBtn.innerText = 'SPOT THE PHISH (FLAGS)';
+        toggleBtn.style.display = 'block';
+
+      } catch (err) {
+        console.error(err);
+        alert("Failed to generate AI Phish: " + err.message);
+      } finally {
+        btn.innerText = "Generate Lure ✨";
+        btn.style.background = "var(--ink)";
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+
+</html>
