@@ -300,6 +300,7 @@
     ]
   }
   </script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/xapiwrapper@1.0.3/dist/xapiwrapper.min.js"></script>
 </head>
 <body>
 
@@ -385,6 +386,44 @@
         let audioCtx;
         let playerName = "AGENT";
 
+        // --- xAPI Configuration ---
+        const LRS_ENDPOINT = "https://phishing-game-test.lrs.io/xapi/"; 
+        const LRS_KEY = "042f0bc9-9898-41cf-a567-61fd780e76bb";
+        const LRS_SECRET = "d3a5d284-4a98-4832-acb0-9748e2821e7c";
+
+        function initXAPI() {
+            const conf = {
+                "endpoint" : LRS_ENDPOINT,
+                "auth" : "Basic " + btoa(LRS_KEY + ":" + LRS_SECRET)
+            };
+            ADL.XAPIWrapper.changeConfig(conf);
+        }
+
+        function sendXAPIStatement(verbId, verbDisplay, objectId, objectName, resultData = null) {
+            const actor = {
+                "mbox": "mailto:" + playerName.toLowerCase().replace(/[^a-z0-9]/g, '') + "@cyberprasad.portfolio",
+                "name": playerName
+            };
+
+            const statement = {
+                "actor": actor,
+                "verb": {
+                    "id": verbId,
+                    "display": { "en-US": verbDisplay }
+                },
+                "object": {
+                    "id": objectId,
+                    "definition": { "name": { "en-US": objectName } }
+                }
+            };
+            if(resultData) statement.result = resultData;
+
+            ADL.XAPIWrapper.sendStatement(statement, function(resp, obj){
+                console.log("xAPI Statement Sent: [" + verbDisplay + "] " + resp.status);
+            });
+        }
+        // --------------------------
+
         // Initialize Audio Context
         function initAudio() {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -427,9 +466,18 @@
             }
 
             initAudio();
+            initXAPI(); // Setup xAPI with credentials
+            
             document.getElementById('start-screen').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
             document.getElementById('total-levels').innerText = scenarios.length;
+            
+            // Record game launch
+            sendXAPIStatement(
+                "http://adlnet.gov/expapi/verbs/launched", "launched",
+                "https://cyberprasad.netlify.app/game.html", "Spot the Phish Simulation"
+            );
+
             loadLevel();
         }
 
@@ -454,6 +502,17 @@
             const data = scenarios[currentLevel];
             const isCorrect = userGuessedPhish === data.isPhish;
             
+            // Record user's guess for this intercept
+            sendXAPIStatement(
+                "http://adlnet.gov/expapi/verbs/answered", "answered",
+                "https://cyberprasad.netlify.app/game.html/scenario-" + (currentLevel + 1), 
+                "Intercept " + (currentLevel + 1) + ": " + data.subject,
+                {
+                    "success": isCorrect,
+                    "response": userGuessedPhish ? "Phish" : "Legit"
+                }
+            );
+
             const overlay = document.getElementById('result-overlay');
             const title = document.getElementById('result-title');
             const explanation = document.getElementById('result-explanation');
@@ -486,6 +545,20 @@
             if (score === scenarios.length) message = "EXPERT DEFENDER! Perfect Score.";
             else if (score > scenarios.length / 2) message = "NOT BAD. But there's room for improvement.";
             else message = "YOUR SYSTEM HAS BEEN COMPROMISED. More training required.";
+
+            // Record game completion and final score
+            sendXAPIStatement(
+                "http://adlnet.gov/expapi/verbs/completed", "completed",
+                "https://cyberprasad.netlify.app/game.html", "Spot the Phish Simulation",
+                {
+                    "score": {
+                        "raw": score,
+                        "min": 0,
+                        "max": scenarios.length,
+                        "scaled": score / scenarios.length
+                    }
+                }
+            );
 
             container.innerHTML = `
                 <div style="text-align: center; padding: 40px;">
