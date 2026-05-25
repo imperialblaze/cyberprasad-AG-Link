@@ -17,7 +17,6 @@
     
     .service-hero {
       padding: 160px 64px 100px;
-      min-height: 80vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -33,12 +32,47 @@
     }
     .sh-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; display: flex; align-items: center; gap: 14px; }
     .sh-label::before { content: ''; width: 26px; height: 1px; background: var(--accent); }
-    .sh-title { font-family: var(--font-display); font-size: clamp(64px, 8vw, 120px); letter-spacing: 2px; line-height: 0.9; margin-bottom: 32px; color: var(--paper); }
+    .sh-title { font-family: var(--font-display); font-size: clamp(64px, 8vw, 120px); letter-spacing: 2px; line-height: 0.9; margin-bottom: 24px; color: var(--paper); }
     .sh-desc { font-size: 14px; color: rgba(244,240,232,0.6); max-width: 600px; line-height: 1.8; margin-bottom: 48px; }
     .sh-features { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 60px; padding-top: 60px; border-top: 1px solid rgba(244,240,232,0.1); max-width: 800px; }
     .shf-item h3 { font-family: var(--font-serif); font-size: 24px; color: var(--accent); margin-bottom: 12px; }
     .shf-item p { font-size: 12px; color: rgba(244,240,232,0.45); line-height: 1.7; }
     footer { background: #060809; }
+    
+    .video-wrapper {
+      width: 100%;
+      max-width: 800px;
+      aspect-ratio: 16/9;
+      border: 1px solid rgba(244,240,232,0.08);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 40px;
+    }
+    .video-wrapper:hover {
+      border-color: rgba(200,64,26,0.3);
+      box-shadow: 0 24px 64px rgba(200,64,26,0.1);
+    }
+    .video-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .service-hero {
+        padding: 120px 24px 80px;
+      }
+      .sh-features {
+        margin-top: 30px;
+        padding-top: 30px;
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
   </style>
   <!-- SEO & AI Meta Tags -->
   <meta name="author" content="Prasad Sawant" />
@@ -83,6 +117,24 @@
     <div style="position:relative; z-index:2;">
       <div class="sh-label">Service Offering</div>
       <h1 class="sh-title">Live Trainings</h1>
+
+      <div id="file-protocol-warning" style="display: none; width: 100%; max-width: 800px; background: rgba(200, 64, 26, 0.08); border: 1px solid rgba(200, 64, 26, 0.4); padding: 16px; border-radius: 6px; font-family: var(--font-mono); font-size: 11px; color: var(--paper); line-height: 1.6; text-align: left; box-sizing: border-box; margin-left: auto; margin-right: auto; margin-bottom: 24px;">
+        <span style="color: var(--accent); font-weight: bold; font-size: 13px; display: block; margin-bottom: 4px;">⚠️ Local File (file://) Protocol Detected</span>
+        YouTube embeds require a secure web server origin to play. To bypass <strong>Error 153 (Video player configuration error)</strong>, please access the page through the active development server:
+        <a href="http://localhost:8080/live-trainings.html" target="_blank" style="color: var(--accent-light); text-decoration: underline; font-weight: 600; display: block; margin-top: 6px;">http://localhost:8080/live-trainings.html &rarr;</a>
+      </div>
+
+      <div class="video-wrapper">
+        <iframe 
+          id="youtube-iframe"
+          src="https://www.youtube-nocookie.com/embed/lEK84lV6dxs" 
+          title="Social Engineering - Prasad Sawant - TEDx" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="no-referrer-when-downgrade" 
+          allowfullscreen>
+        </iframe>
+      </div>
+
       <p class="sh-desc">High-energy in-person and virtual sessions for audiences from 20 to 2,000+. Live threat demos, real-time phishing tests, interactive polls, and role-specific breakout discussions.</p>
       <a class="btn btn-red" href="index.html#contact">Discuss a Project &rarr;</a>
       
@@ -98,6 +150,24 @@
       </div>
     </div>
   </header>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      if (window.location.protocol === 'file:') {
+        document.getElementById('file-protocol-warning').style.display = 'block';
+        var iframe = document.getElementById('youtube-iframe');
+        if (iframe) {
+          iframe.src = "https://www.youtube-nocookie.com/embed/lEK84lV6dxs?autoplay=1&mute=1";
+        }
+      } else {
+        var iframe = document.getElementById('youtube-iframe');
+        var origin = window.location.origin;
+        if (iframe && origin && origin.indexOf('http') === 0) {
+          iframe.src = "https://www.youtube-nocookie.com/embed/lEK84lV6dxs?autoplay=1&mute=1&enablejsapi=1&origin=" + encodeURIComponent(origin);
+        }
+      }
+    });
+  </script>
 
   <footer>
     <div class="footer-name">Prasad Sawant</div>
