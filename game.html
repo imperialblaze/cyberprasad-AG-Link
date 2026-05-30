@@ -276,6 +276,7 @@
                 padding: 6px 10px;
             }
         }
+
     </style>
   <!-- SEO & AI Meta Tags -->
   <meta name="author" content="Prasad Sawant" />
@@ -302,11 +303,12 @@
   </script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/hmac-sha256.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/enc-base64-min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/adlnet/xAPIWrapper@master/xapiwrapper.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/adlnet/xAPIWrapper@v1.11.0/xapiwrapper.min.js"></script>
 </head>
 <body>
 
     <button id="btn-exit-fs" onclick="attemptExitFullscreen()">[X] EXIT</button>
+
 
     <div id="start-screen">
         <h1>SPOT THE PHISH</h1>
@@ -389,49 +391,117 @@
         let playerName = "AGENT";
 
         // --- xAPI Configuration ---
-        const LRS_ENDPOINT = "https://phishing-game-test.lrs.io/xapi/"; 
-        const LRS_KEY = "042f0bc9-9898-41cf-a567-61fd780e76bb";
+        const LRS_ENDPOINT = "https://phishing-game-test.lrs.io/xapi/";
+        const LRS_KEY    = "042f0bc9-9898-41cf-a567-61fd780e76bb";
         const LRS_SECRET = "d3a5d284-4a98-4832-acb0-9748e2821e7c";
+        const GAME_ID    = "https://cyberprasad.netlify.app/game.html";
 
+        let sessionStartTime = null; // set on initialized, used for duration
+
+        // --- LRS Setup ---
         function initXAPI() {
             if (typeof ADL === 'undefined' || typeof ADL.XAPIWrapper === 'undefined') {
                 console.warn("xAPIWrapper not loaded.");
+                hudLog("\u274C xAPIWrapper not loaded", true);
                 return;
             }
             try {
-                const conf = {
-                    "endpoint" : LRS_ENDPOINT,
-                    "auth" : "Basic " + btoa(LRS_KEY + ":" + LRS_SECRET)
-                };
-                ADL.XAPIWrapper.changeConfig(conf);
-            } catch(e) { console.error(e); }
+                ADL.XAPIWrapper.changeConfig({
+                    "endpoint": LRS_ENDPOINT,
+                    "auth": "Basic " + btoa(LRS_KEY + ":" + LRS_SECRET)
+                });
+                hudLog("\u2705 LRS connected", false);
+            } catch(e) {
+                console.error(e);
+                hudLog("\u274C LRS config error", true);
+            }
         }
 
-        function sendXAPIStatement(verbId, verbDisplay, objectId, objectName, resultData = null) {
+        // --- Actor Builder ---
+        function getActor() {
+            return {
+                "objectType": "Agent",
+                "mbox": "mailto:" + playerName.toLowerCase().replace(/[^a-z0-9]/g, '') + "@cyberprasad.portfolio",
+                "name": playerName
+            };
+        }
+
+        // --- Context Builder ---
+        function getContext(extra) {
+            const ctx = {
+                "platform": "Spot the Phish \u2013 cyberprasad.netlify.app",
+                "language": "en-US",
+                "contextActivities": {
+                    "grouping":  [{ "objectType": "Activity", "id": GAME_ID }],
+                    "category": [{ "objectType": "Activity", "id": "https://w3id.org/xapi/security" }]
+                }
+            };
+            return extra ? Object.assign(ctx, extra) : ctx;
+        }
+
+        // --- Core Statement Sender ---
+        function sendXAPIStatement(verbId, verbDisplay, objectId, objectName, objectType, resultData, extraContext) {
             if (typeof ADL === 'undefined' || typeof ADL.XAPIWrapper === 'undefined') return;
             try {
-                const actor = {
-                    "mbox": "mailto:" + playerName.toLowerCase().replace(/[^a-z0-9]/g, '') + "@cyberprasad.portfolio",
-                    "name": playerName
-                };
-
-                const statement = {
-                    "actor": actor,
+                const stmt = {
+                    "actor": getActor(),
                     "verb": {
                         "id": verbId,
                         "display": { "en-US": verbDisplay }
                     },
                     "object": {
+                        "objectType": "Activity",
                         "id": objectId,
-                        "definition": { "name": { "en-US": objectName } }
-                    }
+                        "definition": {
+                            "name": { "en-US": objectName },
+                            "type": objectType || "http://adlnet.gov/expapi/activities/simulation"
+                        }
+                    },
+                    "context":   getContext(extraContext),
+                    "timestamp": new Date().toISOString()
                 };
-                if(resultData) statement.result = resultData;
+                if (resultData) stmt.result = resultData;
 
-                ADL.XAPIWrapper.sendStatement(statement, function(resp, obj){
-                    console.log("xAPI Statement Sent: [" + verbDisplay + "] " + resp.status);
+                ADL.XAPIWrapper.sendStatement(stmt, function(resp) {
+                    const ok  = resp && (resp.status === 204 || resp.status === 200);
+                    const tag = ok ? "\u2705" : "\u274C";
+                    const http = resp ? " HTTP" + resp.status : " (no resp)";
+                    console.log("xAPI [" + verbDisplay + "]" + http);
+                    hudLog(tag + " " + verbDisplay + http, !ok);
                 });
-            } catch(e) { console.error(e); }
+            } catch(e) {
+                console.error(e);
+                hudLog("\u274C Exception: " + verbDisplay, true);
+            }
+        }
+
+        // --- Shorthand: whole-game events ---
+        function xapiGame(verbId, verbDisplay, resultData) {
+            sendXAPIStatement(
+                verbId, verbDisplay,
+                GAME_ID, "Spot the Phish Simulation",
+                "http://adlnet.gov/expapi/activities/simulation",
+                resultData
+            );
+        }
+
+        // --- Shorthand: per-scenario events ---
+        function xapiScenario(verbId, verbDisplay, level, resultData, extraCtx) {
+            const sc = scenarios[level];
+            sendXAPIStatement(
+                verbId, verbDisplay,
+                GAME_ID + "/scenario-" + (level + 1),
+                "Intercept " + (level + 1) + ": " + sc.subject,
+                "http://adlnet.gov/expapi/activities/interaction",
+                resultData,
+                extraCtx
+            );
+        }
+
+        // --- Internal logging (console only, not visible to user) ---
+        function hudLog(msg, isError) {
+            if (isError) console.warn("xAPI:", msg);
+            else         console.log("xAPI:", msg);
         }
         // --------------------------
 
@@ -483,11 +553,12 @@
             document.getElementById('game-container').style.display = 'block';
             document.getElementById('total-levels').innerText = scenarios.length;
             
-            // Record game launch
-            sendXAPIStatement(
-                "http://adlnet.gov/expapi/verbs/launched", "launched",
-                "https://cyberprasad.netlify.app/game.html", "Spot the Phish Simulation"
-            );
+            // 1. initialized — session clock starts
+            sessionStartTime = Date.now();
+            xapiGame("http://adlnet.gov/expapi/verbs/initialized", "initialized");
+
+            // 2. launched — user entered alias and clicked start
+            xapiGame("http://adlnet.gov/expapi/verbs/launched", "launched");
 
             loadLevel();
         }
@@ -507,22 +578,42 @@
             document.getElementById('e-body').innerHTML = personalizedBody; 
             
             document.getElementById('result-overlay').style.display = 'none';
+
+            // 3. experienced — user is viewing a new scenario
+            xapiScenario("http://adlnet.gov/expapi/verbs/experienced", "experienced", currentLevel);
         }
 
         function makeGuess(userGuessedPhish) {
             const data = scenarios[currentLevel];
             const isCorrect = userGuessedPhish === data.isPhish;
             
-            // Record user's guess for this intercept
-            sendXAPIStatement(
+            const responseStr = userGuessedPhish ? "phish" : "legit";
+
+            // 4. answered — captures the user's choice with full metadata
+            xapiScenario(
                 "http://adlnet.gov/expapi/verbs/answered", "answered",
-                "https://cyberprasad.netlify.app/game.html/scenario-" + (currentLevel + 1), 
-                "Intercept " + (currentLevel + 1) + ": " + data.subject,
+                currentLevel,
                 {
-                    "success": isCorrect,
-                    "response": userGuessedPhish ? "Phish" : "Legit"
+                    "success":  isCorrect,
+                    "response": responseStr,
+                    "score":    { "raw": isCorrect ? 1 : 0, "min": 0, "max": 1, "scaled": isCorrect ? 1 : 0 }
+                },
+                {
+                    "extensions": {
+                        "https://cyberprasad.netlify.app/ext/email-type": data.isPhish ? "phish" : "legit",
+                        "https://cyberprasad.netlify.app/ext/user-guess": responseStr
+                    }
                 }
             );
+
+            // 5 & 6. passed / failed — separate verb per outcome for granular LRS filtering
+            if (isCorrect) {
+                xapiScenario("http://adlnet.gov/expapi/verbs/passed", "passed", currentLevel,
+                    { "success": true, "score": { "raw": 1, "min": 0, "max": 1, "scaled": 1 } });
+            } else {
+                xapiScenario("http://adlnet.gov/expapi/verbs/failed", "failed", currentLevel,
+                    { "success": false, "score": { "raw": 0, "min": 0, "max": 1, "scaled": 0 } });
+            }
 
             const overlay = document.getElementById('result-overlay');
             const title = document.getElementById('result-title');
@@ -546,6 +637,12 @@
         }
 
         function nextLevel() {
+            // 7. progressed — user moves past the result screen to the next intercept
+            xapiScenario(
+                "http://adlnet.gov/expapi/verbs/progressed", "progressed",
+                currentLevel,
+                { "score": { "raw": score, "min": 0, "max": scenarios.length, "scaled": score / scenarios.length } }
+            );
             currentLevel++;
             loadLevel();
         }
@@ -557,15 +654,21 @@
             else if (score > scenarios.length / 2) message = "NOT BAD. But there's room for improvement.";
             else message = "YOUR SYSTEM HAS BEEN COMPROMISED. More training required.";
 
-            // Record game completion and final score
-            sendXAPIStatement(
+            // 8. completed — includes session duration + pass/fail flag
+            const elapsed = sessionStartTime ? Math.round((Date.now() - sessionStartTime) / 1000) : 0;
+            const iso8601d = "PT" + Math.floor(elapsed / 60) + "M" + (elapsed % 60) + "S";
+            const passed   = score >= Math.ceil(scenarios.length / 2);
+
+            xapiGame(
                 "http://adlnet.gov/expapi/verbs/completed", "completed",
-                "https://cyberprasad.netlify.app/game.html", "Spot the Phish Simulation",
                 {
+                    "success":    passed,
+                    "completion": true,
+                    "duration":   iso8601d,
                     "score": {
-                        "raw": score,
-                        "min": 0,
-                        "max": scenarios.length,
+                        "raw":    score,
+                        "min":    0,
+                        "max":    scenarios.length,
                         "scaled": score / scenarios.length
                     }
                 }
